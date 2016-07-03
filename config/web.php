@@ -51,6 +51,11 @@ $config = [
         ],
         */
     ],
+    'modules' => [
+        'activity' => [
+            'class' => 'app\modules\activity\Module',
+        ],
+    ],
     'params' => $params,
 ];
 
