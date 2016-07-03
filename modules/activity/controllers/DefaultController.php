@@ -2,12 +2,12 @@
 
 namespace app\modules\activity\controllers;
 
-use yii\web\Controller;
+use app\controllers\InitController;
 
 /**
  * Default controller for the `activity` module
  */
-class DefaultController extends Controller
+class DefaultController extends InitController
 {
     /**
      * Renders the index view for the module
