@@ -1,6 +1,6 @@
 <?php
 
-$params = require(__DIR__ . '/params.php');
+$params = array_merge(require(__DIR__ . '/params.php'), require(__DIR__ . '/params-local.php'));
 
 $config = [
     'id' => 'basic',
@@ -38,6 +38,10 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db-local.php'),
+        'assetManager' => [
+            'basePath' => '@webroot/web/assets',
+            'baseUrl' => '@web/web/assets',
+        ],
         /*
         'urlManager' => [
             'enablePrettyUrl' => true,
@@ -55,11 +59,13 @@ if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
+        'allowedIPs'=>['192.168.0.*', '127.0.0.1', '::1'],
     ];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
+        'allowedIPs'=>['192.168.0.*', '127.0.0.1', '::1'],
     ];
 }
 
