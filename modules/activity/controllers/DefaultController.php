@@ -2,12 +2,10 @@
 
 namespace app\modules\activity\controllers;
 
-use app\controllers\InitController;
-
 /**
  * Default controller for the `activity` module
  */
-class DefaultController extends InitController
+class DefaultController extends ActivityController
 {
     /**
      * Renders the index view for the module

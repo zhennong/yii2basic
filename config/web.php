@@ -6,6 +6,7 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'timeZone'=>'Asia/Chongqing',
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -50,6 +51,12 @@ $config = [
             ],
         ],
         */
+        'formatter' => [
+            'class' => 'yii\i18n\Formatter',
+            'dateFormat' => 'Y-M-d',
+            'datetimeFormat' => 'Y-M-d H:i:s',
+            'timeFormat' => 'H:i:s',
+        ],
     ],
     'modules' => [
         'activity' => [
