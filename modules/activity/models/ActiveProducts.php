@@ -53,7 +53,7 @@ class ActiveProducts extends \yii\db\ActiveRecord
         return [
             [['active_id', 'product_id', 'active_price', 'original_price'], 'required'],
             [['active_id', 'product_id', 'active_price', 'original_price', 'price_bak', 'market_id', 'sales_id', 'market_original_price', 'market_active_price', 'market_price_bak', 'created_at', 'updated_at', 'status'], 'integer'],
-            [['active_id', 'product_id'], 'unique', 'targetAttribute' => ['active_id', 'product_id'], 'message' => 'The combination of 活动id and 产品id has already been taken.'],
+            [['product_id'], 'unique'],
         ];
     }
 

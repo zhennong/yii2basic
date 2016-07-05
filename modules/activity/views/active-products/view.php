@@ -38,8 +38,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'market_original_price',
             'market_active_price',
             'market_price_bak',
-            'created_at',
-            'updated_at',
+            'created_at:datetime',
+            'updated_at:datetime',
             'status',
         ],
     ]) ?>
