@@ -25,6 +25,7 @@ use yii\behaviors\TimestampBehavior;
 class ActiveProducts extends \yii\db\ActiveRecord
 {
     const STATUS_DEFAULT = 0;
+
     public function behaviors()
     {
         return [
@@ -38,17 +39,11 @@ class ActiveProducts extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function tableName()
     {
         return 'destoon_active_products';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -58,9 +53,6 @@ class ActiveProducts extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels()
     {
         return [
@@ -79,4 +71,8 @@ class ActiveProducts extends \yii\db\ActiveRecord
             'status' => 'Status',
         ];
     }
+
+    public static $staticActiveProducts = [
+        ['active_id' => '25', 'product_id' => '95662', 'active_price' => '315', 'original_price' => '330', 'market_id' => '7', 'sales_id' => '0', 'market_original_price' => '300', 'market_active_price' => '285',],
+    ];
 }

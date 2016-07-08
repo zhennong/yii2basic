@@ -35,7 +35,8 @@
         "johnitvn/yii2-ajaxcrud": "*",
         "warrence/yii2-kartikgii": "dev-master",
         "mootensai/yii2-enhanced-gii": "dev-master",
-        "schmunk42/yii2-giiant": "@stable"
+        "schmunk42/yii2-giiant": "@stable",
+        "fedemotta/yii2-widget-datatables": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

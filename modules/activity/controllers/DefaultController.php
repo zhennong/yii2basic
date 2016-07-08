@@ -1,6 +1,7 @@
 <?php
 
 namespace app\modules\activity\controllers;
+use app\modules\activity\models\ActiveProducts;
 
 /**
  * Default controller for the `activity` module
@@ -13,6 +14,9 @@ class DefaultController extends ActivityController
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $staticActiveProducts = ActiveProducts::$staticActiveProducts;
+        return $this->render('index', [
+            'staticActiveProducts' => $staticActiveProducts,
+        ]);
     }
 }
