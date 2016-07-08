@@ -13,15 +13,13 @@ use app\modules\activity\models\ActiveProducts;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'active_id')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'active_id')->textInput() ?>
 
     <?= $form->field($model, 'product_id')->textInput() ?>
 
     <?= $form->field($model, 'active_price')->textInput() ?>
 
     <?= $form->field($model, 'original_price')->textInput() ?>
-
-    <?= $form->field($model, 'price_bak')->textInput() ?>
 
     <?= $form->field($model, 'market_id')->textInput() ?>
 
@@ -30,8 +28,6 @@ use app\modules\activity\models\ActiveProducts;
     <?= $form->field($model, 'market_original_price')->textInput() ?>
 
     <?= $form->field($model, 'market_active_price')->textInput() ?>
-
-    <?= $form->field($model, 'market_price_bak')->textInput() ?>
 
     <?= $form->field($model, 'status')->dropDownList(ActiveProducts::getStatus()) ?>
 

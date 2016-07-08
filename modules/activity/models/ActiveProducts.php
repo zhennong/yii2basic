@@ -8,7 +8,7 @@ use yii\behaviors\TimestampBehavior;
 /**
  * This is the model class for table "destoon_active_products".
  *
- * @property string $active_id
+ * @property integer $active_id
  * @property integer $product_id
  * @property integer $active_price
  * @property integer $original_price
@@ -25,14 +25,12 @@ use yii\behaviors\TimestampBehavior;
 class ActiveProducts extends \yii\db\ActiveRecord
 {
     const STATUS_DEFAULT = 0;
-
     public function behaviors()
     {
         return [
             TimestampBehavior::className(),
         ];
     }
-
     public static function getStatus()
     {
         return [
@@ -40,6 +38,9 @@ class ActiveProducts extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
     public static function tableName()
     {
         return 'destoon_active_products';
@@ -51,8 +52,8 @@ class ActiveProducts extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['active_id', 'product_id', 'active_price', 'original_price'], 'required'],
             [['active_id', 'product_id', 'active_price', 'original_price', 'price_bak', 'market_id', 'sales_id', 'market_original_price', 'market_active_price', 'market_price_bak', 'created_at', 'updated_at', 'status'], 'integer'],
+            [['product_id', 'active_price', 'original_price'], 'required'],
             [['product_id'], 'unique'],
         ];
     }

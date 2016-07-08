@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
              'market_price_bak',
              'created_at:datetime',
              'updated_at:datetime',
-            // 'status',
+             'status',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

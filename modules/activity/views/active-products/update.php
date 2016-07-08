@@ -5,9 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\modules\activity\models\ActiveProducts */
 
-$this->title = 'Update Active Products: ' . $model->active_id;
+$this->title = 'Update Active Products: ' . $model->product_id;
 $this->params['breadcrumbs'][] = ['label' => 'Active Products', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->active_id, 'url' => ['view', 'active_id' => $model->active_id, 'product_id' => $model->product_id]];
+$this->params['breadcrumbs'][] = ['label' => $model->product_id, 'url' => ['view', 'id' => $model->product_id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="active-products-update">
