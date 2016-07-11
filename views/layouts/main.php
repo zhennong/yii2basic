@@ -40,8 +40,8 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed201
     ) ?>
 
 </div>
-
 <?php $this->endBody() ?>
+<?=$this->blocks['extends'] ?>
 </body>
 </html>
 <?php $this->endPage() ?>

@@ -74,5 +74,6 @@ class ActiveProducts extends \yii\db\ActiveRecord
 
     public static $staticActiveProducts = [
         ['active_id' => '25', 'product_id' => '95662', 'active_price' => '315', 'original_price' => '330', 'market_id' => '7', 'sales_id' => '0', 'market_original_price' => '300', 'market_active_price' => '285',],
+        ['active_id' => '25', 'product_id' => '956621', 'active_price' => '315', 'original_price' => '330', 'market_id' => '7', 'sales_id' => '0', 'market_original_price' => '300', 'market_active_price' => '285',],
     ];
 }
