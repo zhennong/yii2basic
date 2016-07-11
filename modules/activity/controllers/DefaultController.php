@@ -38,17 +38,21 @@ class DefaultController extends ActivityController
     {
         $staticActiveProducts = ActiveProducts::$staticActiveProducts;
         $messages = [];
+        $message_error_total = 0;
         $product_ids = [];
         foreach($staticActiveProducts as $k => $v){
             if(in_array($v['product_id'], $product_ids)){
                 $messages[] = ['type'=>'danger', 'product_id'=>$v['product_id'], 'msg'=>'此产品重复'];
+                $message_error_total++;
             }else{
                 $this_product_info = Product::find()->where(['itemid'=>$v['product_id']])->one();
                 if(!$this_product_info){
                     $messages[] = ['type'=>'danger', 'product_id'=>$v['product_id'], 'msg'=>'没有此产品'];
+                    $message_error_total++;
                 }
                 if($this_product_info['price']<$v['active_price']||$this_product_info['price']==$v['active_price']){
                     $messages[] = ['type'=>'danger', 'product_id'=>$v['product_id'], 'msg'=>'活动价格应该小于当前产品价格'];
+                    $message_error_total++;
                 }
                 if($this_product_info['price']!=$v['original_price']){
                     $messages[] = ['type'=>'warning', 'product_id'=>$v['product_id'], 'msg'=>'原价与当前产品价格不符'];
