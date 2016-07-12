@@ -80,6 +80,9 @@ $config = [
         'activity' => [
             'class' => 'app\modules\activity\Module',
         ],
+        'products' => [
+            'class' => 'app\modules\products\Module',
+        ],
     ],
     'params' => $params,
 ];

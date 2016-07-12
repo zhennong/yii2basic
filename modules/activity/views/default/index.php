@@ -1,6 +1,6 @@
 <?php $this->beginBlock('extends') ?>
 <script>
-    $(function(){
+    $(function () {
 //        $(".active_products_import").on("click", function(){
 //            alert(1);
 //        })
@@ -11,8 +11,9 @@
 <div class="activity-default-index">
     <h1><?= $this->context->action->uniqueId ?></h1>
     <p>
-        <a class="btn btn-primary" href="<?=Yii::$app->urlManager->createUrl('activity/active-products') ?>">活动产品列表</a>
-        <a class="btn btn-primary active_products_import" href="<?=Yii::$app->urlManager->createUrl('activity/default/import-acrive-products') ?>">批量导入活动产品</a>
+        <a class="btn btn-primary" href="<?= Yii::$app->urlManager->createUrl('activity/active-products') ?>">活动产品列表</a>
+        <a class="btn btn-primary active_products_import"
+           href="<?= Yii::$app->urlManager->createUrl('activity/default/import-acrive-products') ?>">批量导入活动产品</a>
     </p>
     <br>
     <h1>活动产品预览</h1>
@@ -35,21 +36,30 @@
         </tr>
         </thead>
         <tbody>
-        <?php foreach($staticActiveProducts as $k => $v): ?>
+        <?php foreach ($staticActiveProducts as $k => $v): ?>
             <tr>
-                <td><?=$v['active_id'] ?></td>
-                <td><?=$v['product_id'] ?></td>
-                <td><?=$v['product_info']['title'] ?></td>
-                <td><?=$v['product_info']['standard'] ?></td>
-                <td><?=$v['product_info']['price'] ?></td>
-                <td><?=$v['active_price'] ?></td>
-                <td><?=$v['original_price'] ?></td>
-                <td><?=$v['market_id'] ?></td>
-                <td><?=$v['sales_id'] ?></td>
-                <td><?=$v['market_info']['name'] ?></td>
-                <td><?=$v['sales_info']['title'] ?></td>
-                <td><?=$v['market_original_price'] ?></td>
-                <td><?=$v['market_active_price'] ?></td>
+                <td><?= $v['active_id'] ?></td>
+                <td><?= $v['product_id'] ?></td>
+                <td><?= $v['product_info']['title'] ?></td>
+                <td><?= $v['product_info']['standard'] ?></td>
+                <td><?= $v['product_info']['price'] ?></td>
+                <td><?= $v['active_price'] ?></td>
+                <td><?= $v['original_price'] ?></td>
+                <?php if ($v['market_id'] > 0): ?>
+                    <td><?= $v['market_id'] ?></td>
+                    <td><?= $v['sales_id'] ?></td>
+                    <td><?= $v['market_info']['name'] ?></td>
+                    <td><?= $v['sales_info']['title'] ?></td>
+                    <td><?= $v['market_original_price'] ?></td>
+                    <td><?= $v['market_active_price'] ?></td>
+                    <?php else: ?>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                <?php endif; ?>
             </tr>
         <?php endforeach; ?>
         </tbody>

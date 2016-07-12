@@ -1,17 +1,16 @@
 <?php
 
-namespace app\modules\activity;
+namespace app\modules\products;
 
 /**
- * activity module definition class
+ * products module definition class
  */
 class Module extends \yii\base\Module
 {
-    const ACTIVE_ID = 25;
     /**
      * @inheritdoc
      */
-    public $controllerNamespace = 'app\modules\activity\controllers';
+    public $controllerNamespace = 'app\modules\products\controllers';
 
     /**
      * @inheritdoc

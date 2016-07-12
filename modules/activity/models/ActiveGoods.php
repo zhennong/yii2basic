@@ -11,7 +11,7 @@ use Yii;
  * @property string $actid
  * @property integer $pid
  * @property integer $price
- * @property string $addtime
+ * @property integer $addtime
  * @property integer $marketprice
  * @property integer $marketid
  * @property integer $menshiid
@@ -33,8 +33,7 @@ class ActiveGoods extends \yii\db\ActiveRecord
     {
         return [
             [['actid', 'pid', 'price', 'addtime'], 'required'],
-            [['actid', 'pid', 'price', 'marketprice', 'marketid', 'menshiid'], 'integer'],
-            [['addtime'], 'string', 'max' => 30],
+            [['actid', 'pid', 'price', 'marketprice', 'marketid', 'menshiid', 'addtime'], 'integer'],
             [['actid', 'pid'], 'unique', 'targetAttribute' => ['actid', 'pid'], 'message' => 'The combination of 活动id and 产品id has already been taken.'],
         ];
     }

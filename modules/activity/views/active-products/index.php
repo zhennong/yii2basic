@@ -17,6 +17,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Create Active Products', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('活动产品调价', ['modify-active-products-price'], ['class' => 'btn btn-warning']) ?>
+        <?= Html::a('活动门市调价', ['modify-active-sales-price'], ['class' => 'btn btn-warning']) ?>
+        <?= Html::a('恢复活动产品', ['recovery-active-products-price'], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('恢复门市产品', ['recovery-active-sales-price'], ['class' => 'btn btn-primary']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
