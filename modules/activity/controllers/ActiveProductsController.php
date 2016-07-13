@@ -3,6 +3,8 @@
 namespace app\modules\activity\controllers;
 
 use app\modules\activity\models\Product;
+use app\modules\activity\models\Supply;
+use app\modules\activity\Module;
 use Yii;
 use app\modules\activity\models\ActiveProducts;
 use app\modules\activity\models\ActiveProductsSearch;
@@ -122,12 +124,14 @@ class ActiveProductsController extends ActivityController
         }
     }
 
+    /**
+     * 活动产品调价
+     */
     public function actionModifyActiveProductsPrice()
     {
         $active_products = ActiveProducts::find()->all();
         foreach ($active_products as $k => $v){
-            $product = Product::find()->where(['itemid'=>$v['product_id']])->one();
-            ActiveProducts::updateAll(['status'=>ActiveProducts::STATUS_HAS_MODIFY, 'price_bak'=>$product->price], ['product_id'=>$v['product_id']]);
+            ActiveProducts::updateAll(['status'=>ActiveProducts::STATUS_HAS_MODIFY], ['product_id'=>$v['product_id']]);
             Product::updateAll([
                 'activeid'=>$v['active_id'],
                 'price'=>$v['active_price'],
@@ -137,16 +141,43 @@ class ActiveProductsController extends ActivityController
         $this->redirect(['/activity/products']);
     }
 
+    /**
+     * 恢复活动产品
+     */
     public function actionRecoveryActiveProductsPrice()
     {
         $active_products = ActiveProducts::find()->all();
         foreach ($active_products as $k => $v){
-            ActiveProducts::updateAll(['status'=>ActiveProducts::STATUS_DEFAULT, 'price_bak'=>0], ['product_id'=>$v['product_id']]);
+            ActiveProducts::updateAll(['status'=>ActiveProducts::STATUS_DEFAULT], ['product_id'=>$v['product_id']]);
             Product::updateAll([
                 'activeid'=>0,
                 'price'=>$v['original_price'],
                 'yuanprice'=>0,
             ],['itemid'=>$v['product_id']]);
+        }
+        $this->redirect(['/activity/active-products']);
+    }
+
+    /**
+     * 活动门市调价
+     */
+    public function actionModifyActiveSalesPrice()
+    {
+        $active_products = ActiveProducts::find()->where(['>', 'market_id', '0'])->all();
+        foreach($active_products as $k => $v){
+            Supply::updateAll(['activeid'=>Module::ACTIVE_ID, 'price'=>$v['market_active_price'], 'yuanprice'=>$v['market_original_price'],], ['pid'=>$v['product_id'], 'fid'=>$v['sales_id']]);
+        }
+        $this->redirect(['/activity/supply']);
+    }
+
+    /**
+     * 恢复活动门市
+     */
+    public function actionRecoveryActiveSalesPrice()
+    {
+        $active_products = ActiveProducts::find()->where(['>', 'market_id', '0'])->all();
+        foreach($active_products as $k => $v){
+            Supply::updateAll(['activeid'=>0, 'price'=>$v['market_original_price'], 'yuanprice'=>0,], ['pid'=>$v['product_id'], 'fid'=>$v['sales_id']]);
         }
         $this->redirect(['/activity/active-products']);
     }

@@ -56,8 +56,10 @@ class DefaultController extends ActivityController
                 $this_product_info = Product::find()->where(['itemid'=>$v['product_id']])->one();
                 if(!$this_product_info){
                     $messages[] = ['type'=>'danger', 'product_id'=>$v['product_id'], 'msg'=>'没有此产品'];
-                }elseif($this_product_info['price']==0){
-                    $messages[] = ['type'=>'danger', 'product_id'=>$v['product_id'], 'msg'=>'当前产品价格为0'];
+                }elseif($this_product_info['activeid']>0){
+                    $messages[] = ['type'=>'danger', 'product_id'=>$v['product_id'], 'msg'=>'当前产品正在活动中'];
+                }elseif($this_product_info['status']!=Product::STATUS_SHELVE){}elseif($this_product_info['price']==0){
+                    $messages[] = ['type'=>'warning', 'product_id'=>$v['product_id'], 'msg'=>'当前产品并未上架'];
                 }elseif($this_product_info['price']<$v['active_price']||$this_product_info['price']==$v['active_price']){
                     $messages[] = ['type'=>'danger', 'product_id'=>$v['product_id'], 'msg'=>'活动价格应该小于当前产品价格'];
                 }elseif($this_product_info['price']!=$v['original_price']){

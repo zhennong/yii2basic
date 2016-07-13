@@ -17,8 +17,16 @@
                                 'url' => Yii::$app->urlManager->createUrl('activity'),
                             ],
                             [
+                                'label' => '参与活动产品预览列表',
+                                'url' => Yii::$app->urlManager->createUrl('activity/active-products'),
+                            ],
+                            [
                                 'label' => '活动产品列表',
                                 'url' => Yii::$app->urlManager->createUrl('activity/products'),
+                            ],
+                            [
+                                'label' => '活动门市供应列表',
+                                'url' => Yii::$app->urlManager->createUrl('activity/supply'),
                             ],
                         ],
                     ],
