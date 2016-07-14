@@ -68,9 +68,17 @@ class DefaultController extends ActivityController
                 $product_ids[] = $v['product_id'];
             }
         }
-        return $this->render('import-acrive-products', [
+        return $this->render('import-active-products', [
             'messages'=>$messages,
         ]);
+    }
+
+    /**
+     * excel导入活动产品
+     */
+    public function actionExcelImportAcriveProducts()
+    {
+        return $this->render('excel-import-active-products');
     }
 
     public function actionModifyActiveProducts()
