@@ -77,11 +77,17 @@ $config = [
         'datecontrol' => [
             'class' => '\kartik\datecontrol\Module'
         ],
+        // 活动
         'activity' => [
             'class' => 'app\modules\activity\Module',
         ],
+        // 产品
         'products' => [
             'class' => 'app\modules\products\Module',
+        ],
+        // 专题
+        'special' => [
+            'class' => 'app\modules\special\Module',
         ],
     ],
     'params' => $params,

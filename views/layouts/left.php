@@ -40,7 +40,26 @@
                                 'url' => Yii::$app->urlManager->createUrl('products/products'),
                             ],
                         ],
-                    ]
+                    ],
+                    [
+                        'label' => '专题管理',
+                        'icon' => 'fa fa-share',
+                        'url' => '#',
+                        'items'=>[
+                            [
+                                'label' => '专题列表',
+                                'url' => Yii::$app->urlManager->createUrl('special/special'),
+                            ],
+                            [
+                                'label' => '专题产品列表',
+                                'url' => Yii::$app->urlManager->createUrl('special/special-products'),
+                            ],
+                            [
+                                'label' => '产品列表',
+                                'url' => Yii::$app->urlManager->createUrl('special/products'),
+                            ],
+                        ],
+                    ],
                 ],
             ]
         ) ?>
