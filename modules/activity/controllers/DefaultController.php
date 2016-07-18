@@ -1,12 +1,15 @@
 <?php
 
 namespace app\modules\activity\controllers;
+use Yii;
 use app\modules\activity\models\ActiveGoods;
 use app\modules\activity\models\ActiveProducts;
+use app\modules\activity\models\ExcelUploadForm;
 use app\modules\activity\models\Market;
 use app\modules\activity\models\Product;
 use app\modules\activity\models\Sales;
 use app\modules\activity\models\Supply;
+use yii\web\UploadedFile;
 
 /**
  * Default controller for the `activity` module
@@ -76,9 +79,67 @@ class DefaultController extends ActivityController
     /**
      * excel导入活动产品
      */
-    public function actionExcelImportAcriveProducts()
+    public function actionExcelImportActiveProducts()
     {
-        return $this->render('excel-import-active-products');
+        $model = new ExcelUploadForm();
+        $excel_uploads_path = Yii::getAlias('@uploads/activity/excels');
+        if (Yii::$app->request->isPost) {
+            $model->file = UploadedFile::getInstance($model, 'file');
+
+            if ($model->validate()) {
+                $model->file->saveAs($excel_uploads_path.'/' . date("Y-m-d"). '.' . time() . '.' . $model->file->extension);
+            }
+        }
+        $files = [];
+        if ($dir = dir($excel_uploads_path)){
+            while ($file = $dir->read()) {
+                if (!is_dir($excel_uploads_path . $file)) {
+                    $file_path = $excel_uploads_path.'/'.$file;
+                    $files[] = [
+                        'file_name'=>$file,
+                        'file_path'=>$file_path,
+                        'file_size'=>filesize($file_path),
+                    ];
+                }
+            }
+        }
+        return $this->render('excel-import-active-products', [
+            'model'=>$model,
+            'files'=>$files,
+        ]);
+    }
+
+    /**
+     * 删除活动产品excel
+     * @param $file_path
+     */
+    public function actionDeleteExcelActiveProducts($file_path)
+    {
+        unlink($file_path);
+        $this->redirect(['/activity/default/excel-import-active-products']);
+    }
+
+    /**
+     * 展示活动产品excel
+     * @param $file_path
+     */
+    public function actionShowExcelActiveProducts()
+    {
+        if(Yii::$app->request->isAjax) {
+            $para = Yii::$app->request->post();
+            $file_path = $para['file_path'];
+            $excel_reader = \PHPExcel_IOFactory::createReaderForFile($file_path);
+            $excel_obj = $excel_reader->load($file_path);
+            $work_sheet = $excel_obj->getActiveSheet();
+            $last_row = $work_sheet->getHighestRow();
+            echo "<table>";
+            for($i=0; $i<$last_row; $i++){
+                echo "<tr><td>";
+                echo $work_sheet->getCell('A'.$i)->getValue();
+                echo "</td></tr>";
+            }
+            echo "</table>";
+        }
     }
 
     public function actionModifyActiveProducts()

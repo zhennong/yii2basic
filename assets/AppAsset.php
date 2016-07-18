@@ -24,5 +24,6 @@ class AppAsset extends AssetBundle
     ];
     public $depends = [
         'dmstr\web\AdminLteAsset',
+        'fedemotta\datatables\DataTablesAsset',
     ];
 }

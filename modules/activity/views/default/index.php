@@ -13,7 +13,7 @@
     <p>
         <a class="btn btn-primary" href="<?= Yii::$app->urlManager->createUrl('activity/active-products') ?>">活动产品列表</a>
         <a class="btn btn-primary active_products_import" href="<?= Yii::$app->urlManager->createUrl('activity/default/import-acrive-products') ?>">批量导入活动产品</a>
-        <a class="btn btn-primary active_products_excel_import" href="<?= Yii::$app->urlManager->createUrl('activity/default/excel-import-acrive-products') ?>">excel导入活动产品</a>
+        <a class="btn btn-primary active_products_excel_import" href="<?= Yii::$app->urlManager->createUrl('activity/default/excel-import-active-products') ?>">excel导入活动产品</a>
     </p>
     <br>
     <h1>活动产品预览</h1>

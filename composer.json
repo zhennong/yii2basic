@@ -15,7 +15,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.4.0",
-        "yiisoft/yii2": ">=2.0.5",
+        "yiisoft/yii2": ">=2.0.8",
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
         "dmstr/yii2-adminlte-asset": "2.*",
@@ -38,7 +38,8 @@
         "schmunk42/yii2-giiant": "@stable",
         "fedemotta/yii2-widget-datatables": "*",
         "2amigos/yii2-date-time-picker-widget": "*",
-        "phpoffice/phpexcel": "*"
+        "phpoffice/phpexcel": "*",
+        "dmstr/yii2-web": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

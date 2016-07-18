@@ -7,6 +7,9 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'timeZone'=>'Asia/Chongqing',
+    'aliases'=>[
+        '@uploads'=>dirname(__DIR__) . '/web/uploads',
+    ],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -88,6 +91,10 @@ $config = [
         // 专题
         'special' => [
             'class' => 'app\modules\special\Module',
+        ],
+        // 测试
+        'test' => [
+            'class' => 'app\modules\test\Module',
         ],
     ],
     'params' => $params,
