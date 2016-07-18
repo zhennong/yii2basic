@@ -10,8 +10,6 @@ use kartik\form\ActiveForm;
 use kartik\helpers\Html;
 use kartik\icons\Icon;
 use mootensai\components\JsBlock;
-use yii\bootstrap\Modal;
-use yii\helpers\Url;
 
 ?>
 
@@ -23,7 +21,7 @@ use yii\helpers\Url;
         var Table = $(".activity-excel-files-table");
         var DataTable = Table.DataTable({});
         // show active products excel file info
-        /*$(".active-products-excel-info").on('click', function(){
+        $(".active-products-excel-info").on('click', function(){
             var url = "<?=Yii::$app->urlManager->createUrl(['activity/default/show-excel-active-products'])?>";
             var file_path = $(this).parents('tr').data('file_path');
             $.ajax({
@@ -34,19 +32,9 @@ use yii\helpers\Url;
                     alert(msg);
                 }
             });
-        });*/
+        });
     });
 </script>
-
-<?php
-Modal::begin([
-    'id' => 'modal-active-products-excel-info',
-    'header' => '<h4 class="modal-title">创建</h4>',
-    'footer' => '<a href="#" class="btn btn-primary" data-dismiss="modal">Close</a>',
-]);
-
-Modal::end();
-?>
 
 <?php $this->endBlock(); ?>
 
@@ -77,22 +65,7 @@ Modal::end();
                 <td><?=$v['file_size']/1000 ?> kb</td>
                 <td>
                     <?php //Html::a('查看', Yii::$app->urlManager->createUrl(['activity/default/show-excel-active-products', 'file_path'=>$v['file_path']]), ['style'=>'color:blue', 'class'=>'active-products-excel-info']) ?>
-                    <?php // Html::a('查看', '/yii2basic/index.php?r=test%2Fproducts%2Fupdate&id=106341', [
-//                        'style'=>'color:blue',
-//                        'class'=>'active-products-excel-info',
-//                        'data-toggle' => 'modal',
-//                        'data-target' => '#modal-active-products-excel-info',
-//                    ]) ?>
-                    <?= \yii\bootstrap\Modal::widget([
-                        'id' => 'contact-modal',
-                        'toggleButton' => [
-                            'label' => 'Обратная связь',
-                            'tag' => 'a',
-                            'data-target' => '#contact-modal',
-                            'href' => Url::toRoute(['/site']),
-                        ],
-                        'clientOptions' => false,
-                    ]); ?>
+                    <?=Html::a('查看', '#', ['style'=>'color:blue', 'class'=>'active-products-excel-info']) ?>
                     <?=Html::a('删除', Yii::$app->urlManager->createUrl(['activity/default/delete-excel-active-products', 'file_path'=>$v['file_path']]), ['style'=>'color:red']) ?>
                 </td>
             </tr>
@@ -100,5 +73,6 @@ Modal::end();
         </tbody>
     </table>
 </div>
+
 
 

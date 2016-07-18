@@ -18,4 +18,14 @@ class DefaultController extends InitController
     {
         return $this->render('index');
     }
+
+    public function actionPjaxTime()
+    {
+        return $this->render('pjax-time',['time'=>date("h:i:s")]);
+    }
+
+    public function actionTestAjaxModal()
+    {
+        return $this->render('test-ajax-modal', []);
+    }
 }

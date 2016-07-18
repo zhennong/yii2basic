@@ -113,9 +113,8 @@ use Yii;
  */
 class Products extends \yii\db\ActiveRecord
 {
-    /**
-     * @inheritdoc
-     */
+    const STATUS_SHELVE = 3;
+    
     public static function tableName()
     {
         return '{{%sell_5}}';
