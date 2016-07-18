@@ -60,6 +60,28 @@
                             ],
                         ],
                     ],
+                    [
+                        'label' => '测试',
+                        'icon' => 'fa fa-share',
+                        'url' => '#',
+                        'items'=>[
+                            [
+                                'label' => '测试产品ajaxcurd',
+                                'url' => Yii::$app->urlManager->createUrl('test/products'),
+                            ],
+                        ],
+                    ],
+                    [
+                        'label' => '优惠码管理',
+                        'icon' => 'fa fa-share',
+                        'url' => '#',
+                        'items'=>[
+                            [
+                                'label' => '优惠码列表',
+                                'url' => Yii::$app->urlManager->createUrl('promo/promo'),
+                            ],
+                        ],
+                    ],
                 ],
             ]
         ) ?>

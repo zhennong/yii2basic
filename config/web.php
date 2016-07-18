@@ -96,6 +96,10 @@ $config = [
         'test' => [
             'class' => 'app\modules\test\Module',
         ],
+        // 优惠码
+        'promo' => [
+            'class' => 'app\modules\promo\Module',
+        ],
     ],
     'params' => $params,
 ];
