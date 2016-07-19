@@ -92,14 +92,15 @@ $this->registerJs($updateJs);*/
                 <td><?= $v['file_size'] / 1000 ?> kb</td>
                 <td>
                     <?php //Html::a('查看', Yii::$app->urlManager->createUrl(['activity/default/show-excel-active-products', 'file_path'=>$v['file_path']]), ['style'=>'color:blue', 'class'=>'active-products-excel-info']) ?>
-                    <?= Html::a('查看', '#', [
+                    <?=Html::a('查看', '#', [
                         'style' => 'color:blue',
                         'class' => 'active-products-excel-info',
                         'data-toggle' => 'modal',
                         'data-target' => '#active-products-excel-info-modal',
                         'data-file_path' => $v['file_path'],
                     ]) ?>
-                    <?= Html::a('删除', Yii::$app->urlManager->createUrl(['activity/default/delete-excel-active-products', 'file_path' => $v['file_path']]), ['data-confirm'=>'确定要删除吗？', 'style' => 'color:red']) ?>
+                    <?=Html::a('导入数据库', Yii::$app->urlManager->createUrl(['activity/default/import-excel-active-products-to-database', 'file_path'=>$v['file_path']]), ['data-confirm'=>'确定要导入吗？', 'style'=>'color:violet']) ?>
+                    <?=Html::a('删除', Yii::$app->urlManager->createUrl(['activity/default/delete-excel-active-products', 'file_path' => $v['file_path']]), ['data-confirm'=>'确定要删除吗？', 'style' => 'color:red']) ?>
                 </td>
             </tr>
         <?php endforeach; ?>

@@ -78,7 +78,7 @@ class DefaultController extends ActivityController
     }
 
     /**
-     * excel导入活动产品
+     * 上传excel活动产品
      */
     public function actionExcelImportActiveProducts()
     {
@@ -146,6 +146,24 @@ class DefaultController extends ActivityController
         }
     }
 
+    /**
+     * 由excel插入数据到数据库
+     */
+    public function actionImportExcelActiveProductsToDatabase($file_path)
+    {
+        $excel_data = Tools::format_excel2array($file_path);
+        $excel_header = array_keys($excel_data[0]);
+        $excel_title = $excel_data[1];
+        foreach ($excel_data as $k => $v){
+            if($k>1){
+                $excel_body[] = $v;
+            }
+        }
+    }
+
+    /**
+     * 由php文件插入数据到数据库
+     */
     public function actionModifyActiveProducts()
     {
         $staticActiveProducts = $this->getStaticActiveProducts();

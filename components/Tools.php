@@ -53,7 +53,7 @@ class Tools
             exit("<hr/>");
         }
     }
-    
+
     /**
      * 将excel转换为数组 by aibhsc
      */
@@ -72,7 +72,7 @@ class Tools
         $allColumn = $currentSheet->getHighestColumn();        //**取得最大的列号*/
         $allRow = $currentSheet->getHighestRow();        //**取得一共有多少行*/
         $data = array();
-        for($rowIndex=0;$rowIndex<$allRow;$rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
+        for($rowIndex=0;$rowIndex<=$allRow;$rowIndex++){        //循环读取每个单元格的内容。注意行从1开始，列从A开始
             for($colIndex='A';$colIndex<=$allColumn;$colIndex++){
                 $addr = $colIndex.$rowIndex;
                 $cell = $currentSheet->getCell($addr)->getValue();
