@@ -94,7 +94,7 @@ class DefaultController extends ActivityController
         $files = [];
         if ($dir = dir($excel_uploads_path)){
             while ($file = $dir->read()) {
-                if (!is_dir($excel_uploads_path . $file)) {
+                if (!is_dir($excel_uploads_path . $file&&$file!="."&&$file!="..")) {
                     $file_path = $excel_uploads_path.'/'.$file;
                     $files[] = [
                         'file_name'=>$file,
