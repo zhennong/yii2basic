@@ -1,6 +1,7 @@
 <?php
 
 namespace app\modules\activity\controllers;
+use app\components\Tools;
 use Yii;
 use app\modules\activity\models\ActiveGoods;
 use app\modules\activity\models\ActiveProducts;
@@ -128,17 +129,20 @@ class DefaultController extends ActivityController
         if(Yii::$app->request->isAjax) {
             $para = Yii::$app->request->post();
             $file_path = $para['file_path'];
-            $excel_reader = \PHPExcel_IOFactory::createReaderForFile($file_path);
-            $excel_obj = $excel_reader->load($file_path);
-            $work_sheet = $excel_obj->getActiveSheet();
-            $last_row = $work_sheet->getHighestRow();
-            echo "<table>";
-            for($i=0; $i<$last_row; $i++){
-                echo "<tr><td>";
-                echo $work_sheet->getCell('A'.$i)->getValue();
-                echo "</td></tr>";
+            $excel_data = Tools::format_excel2array($file_path);
+            $excel_header = array_keys($excel_data[0]);
+            $excel_title = $excel_data[1];
+            foreach ($excel_data as $k => $v){
+                if($k>1){
+                    $excel_body[] = $v;
+                }
             }
-            echo "</table>";
+            return $this->renderAjax('show-excel-active-products', [
+                'excel_data'=>$excel_data,
+                'excel_header'=>$excel_header,
+                'excel_title'=>$excel_title,
+                'excel_body'=>$excel_body,
+            ]);
         }
     }
 
