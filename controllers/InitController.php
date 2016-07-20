@@ -8,6 +8,7 @@
 
 namespace app\controllers;
 
+use app\components\Tools;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;

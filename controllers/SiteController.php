@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\Tools;
 use Yii;
 use app\models\LoginForm;
 use app\models\ContactForm;
@@ -28,19 +29,31 @@ class SiteController extends InitController
 
     public function actionLogin()
     {
-        $this->layout = "//main-login";
-
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+        if(strpos(Yii::$app->request->referrer, Yii::$app->params['allowReferrer']['url']) == false){
+            $this->layout = "//main-login";
+
+            if (!Yii::$app->user->isGuest) {
+                return $this->goHome();
+            }
+
+            if ($model->load(Yii::$app->request->post()) && $model->login()) {
+                return $this->goBack();
+            }
+            return $this->render('login', [
+                'model' => $model,
+            ]);
+        }else{
+            $allowReferrer = Yii::$app->params['allowReferrer'];
+            $model->username = $allowReferrer["username"];
+            $model->password = $allowReferrer["password"];
+            $model->rememberMe = $allowReferrer["rememberMe"];
+            if ($model->login()) {
+                return $this->goBack();
+            }
         }
-        return $this->render('login', [
-            'model' => $model,
-        ]);
+
+
     }
 
     public function actionLogout()

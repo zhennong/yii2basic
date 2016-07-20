@@ -2,6 +2,7 @@
 
 namespace app\modules\activity\controllers;
 use app\components\Tools;
+use app\modules\activity\Module;
 use Yii;
 use app\modules\activity\models\ActiveGoods;
 use app\modules\activity\models\ActiveProducts;
@@ -151,12 +152,23 @@ class DefaultController extends ActivityController
      */
     public function actionImportExcelActiveProductsToDatabase($file_path)
     {
+        $ActiveGoods = new ActiveGoods();
+        $ActvieProducts = new ActiveProducts();
+        ActiveGoods::deleteAll(['actid'=>Module::ACTIVE_ID]);
+        ActiveProducts::deleteAll(['active_id'=>Module::ACTIVE_ID]);
         $excel_data = Tools::format_excel2array($file_path);
-        $excel_header = array_keys($excel_data[0]);
-        $excel_title = $excel_data[1];
         foreach ($excel_data as $k => $v){
             if($k>1){
-                $excel_body[] = $v;
+                $active_id = $v['A'];
+                $product_id = $v['B'];
+                $active_price = $v['C'];
+                $original_price = $v['D'];
+                $market_id = $v['E'];
+                $market_active_price = $v['F'];
+                $market_original_price = $v['G'];
+                $sales_id = Sales::getSalesIdFromProductIdAndMarketId($v['B'], $v['E']);
+                // 插入到active goods表里
+                // 插入到active products表里
             }
         }
     }
