@@ -52,8 +52,6 @@ class SiteController extends InitController
                 return $this->goBack();
             }
         }
-
-
     }
 
     public function actionLogout()
