@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+use dmstr\widgets\Alert;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -22,15 +23,12 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed201
 <body class="hold-transition skin-blue sidebar-mini">
 <?php $this->beginBody() ?>
 <div class="nongyao-layout">
-
+    <?= Alert::widget() ?>
     <?=$content ?>
 
 </div>
 <?php $this->endBody() ?>
 <?=$this->blocks['extends'] ?>
-<script>
-    $(".content-wrapper").attr('style',"min-height:auto");
-</script>
 </body>
 </html>
 <?php $this->endPage() ?>

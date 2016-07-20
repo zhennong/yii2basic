@@ -74,6 +74,9 @@ $this->registerJs($updateJs);*/
 
     <?php ActiveForm::end(); ?>
 
+    <h2>操作</h2>
+    <?=Html::a('查看活动产品列表', Yii::$app->urlManager->createUrl(['activity/active-products']), ['class'=>'btn btn-info']) ?>
+
     <h2>excel文件列表</h2>
     <table class="table table-bordered table-hover activity-excel-files-table">
         <thead>
@@ -99,7 +102,7 @@ $this->registerJs($updateJs);*/
                         'data-target' => '#active-products-excel-info-modal',
                         'data-file_path' => $v['file_path'],
                     ]) ?>
-                    <?=Html::a('导入数据库', Yii::$app->urlManager->createUrl(['activity/default/import-excel-active-products-to-database', 'file_path'=>$v['file_path']]), ['data-confirm'=>'确定要导入吗？', 'style'=>'color:violet']) ?>
+                    <?php // Html::a('导入数据库', Yii::$app->urlManager->createUrl(['activity/default/import-excel-active-products-to-database', 'file_path'=>$v['file_path']]), ['data-confirm'=>'确定要导入吗？', 'style'=>'color:violet']) ?>
                     <?=Html::a('删除', Yii::$app->urlManager->createUrl(['activity/default/delete-excel-active-products', 'file_path' => $v['file_path']]), ['data-confirm'=>'确定要删除吗？', 'style' => 'color:red']) ?>
                 </td>
             </tr>

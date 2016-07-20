@@ -65,12 +65,14 @@ class Sales extends \yii\db\ActiveRecord
 
     public static function getSalesIdFromProductIdAndMarketId($product_id, $market_id)
     {
-        $supply_info = Supply::find()->where(['pid'=>$product_id])->one();
-        $sales_info = Sales::find()->where(['id'=>$supply_info['fid']])->all();
         $sales_id = 0;
-        foreach($sales_info as $k => $v){
-            if ($v['marketid']==$market_id){
-                $sales_id = $v['id'];
+        $supply_info = Supply::find()->where(['pid'=>$product_id])->all();
+        foreach($supply_info as $k => $v){
+            $sales_info = Sales::find()->where(['id'=>$v['fid']])->all();
+            foreach($sales_info as $k1 => $v1){
+                if ($v1['marketid']==$market_id){
+                    $sales_id = $v1['id'];
+                }
             }
         }
         return $sales_id;

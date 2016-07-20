@@ -11,7 +11,7 @@
 <div class="activity-default-products">
     <h1>导入检测</h1>
     <?php if(count($messages)>0): ?>
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered">
         <thead>
         <tr>
             <td>产品id</td>
@@ -20,7 +20,7 @@
         </thead>
         <tbody>
         <?php foreach($messages as $k => $v): ?>
-            <tr class="<?=$v['type'] ?>">
+            <tr>
                 <td><?=$v['product_id'] ?></td>
                 <td><?=$v['msg'] ?></td>
             </tr>
