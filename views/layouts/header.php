@@ -241,7 +241,7 @@ use yii\helpers\Html;
                                 <?= Html::a(
                                     'Sign out',
                                     ['/site/logout'],
-                                    ['data-method' => 'post', 'class' => 'btn btn-default btn-flat']
+                                    ['data-method' => 'post', 'data-confirm'=>'确定要注销吗？', 'class' => 'btn btn-default btn-flat']
                                 ) ?>
                             </div>
                         </li>
