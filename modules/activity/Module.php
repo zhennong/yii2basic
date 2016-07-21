@@ -7,10 +7,6 @@ namespace app\modules\activity;
  */
 class Module extends \yii\base\Module
 {
-    const ACTIVE_ID = 25;
-    /**
-     * @inheritdoc
-     */
     public $controllerNamespace = 'app\modules\activity\controllers';
 
     /**

@@ -44,7 +44,7 @@ class ProductsSearch extends Product
      */
     public function search($params)
     {
-        $query = Product::find()->where(['activeid'=>Module::ACTIVE_ID]);
+        $query = Product::find()->where(['activeid'=>Active::getLastActiveId()]);
 
         // add conditions that should always apply here
 

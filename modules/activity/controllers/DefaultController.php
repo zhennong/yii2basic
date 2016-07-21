@@ -15,6 +15,11 @@ use yii\web\UploadedFile;
  */
 class DefaultController extends ActivityController
 {
+    public function behaviors()
+    {
+        return parent::behaviors();
+    }
+
     public function actionIndex()
     {
         $staticActiveProducts = ActiveProducts::getStaticActiveProducts();
