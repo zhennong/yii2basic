@@ -2,11 +2,11 @@
 
 namespace app\modules\activity\models;
 
-use app\modules\activity\Module;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\modules\activity\models\Supply;
+use app\modules\activity\models\Active;
 
 /**
  * SupplySearch represents the model behind the search form about `app\modules\activity\models\Supply`.
@@ -42,7 +42,7 @@ class SupplySearch extends Supply
      */
     public function search($params)
     {
-        $query = Supply::find()->where(['activeid'=>Module::ACTIVE_ID]);
+        $query = Supply::find()->where(['activeid'=>Active::getLastActiveId()]);
 
         // add conditions that should always apply here
 

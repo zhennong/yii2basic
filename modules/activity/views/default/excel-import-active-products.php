@@ -75,7 +75,10 @@ $this->registerJs($updateJs);*/
     <?php ActiveForm::end(); ?>
 
     <h2>操作</h2>
-    <?=Html::a('查看活动产品列表', Yii::$app->urlManager->createUrl(['activity/active-products']), ['class'=>'btn btn-info']) ?>
+    <?=Html::a('查看活动产品列表', Yii::$app->urlManager->createUrl(['activity/products']), ['class'=>'btn btn-info']) ?>
+    <?=Html::a('查看活动门市列表', Yii::$app->urlManager->createUrl(['activity/supply']), ['class'=>'btn btn-info']) ?>
+    <?php //Html::a('活动调价', Yii::$app->urlManager->createUrl(['activity/active-products']), ['class'=>'btn btn-danger']) ?>
+    <?php //Html::a('恢复价格', Yii::$app->urlManager->createUrl(['activity/active-products']), ['class'=>'btn btn-warning']) ?>
 
     <h2>excel文件列表</h2>
     <table class="table table-bordered table-hover activity-excel-files-table">

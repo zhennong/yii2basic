@@ -129,16 +129,14 @@ class ActiveProductsController extends ActivityController
      */
     public function actionModifyActiveProductsPrice()
     {
-        $active_products = ActiveProducts::find()->all();
-        foreach ($active_products as $k => $v){
-            ActiveProducts::updateAll(['status'=>ActiveProducts::STATUS_HAS_MODIFY], ['product_id'=>$v['product_id']]);
-            Product::updateAll([
-                'activeid'=>$v['active_id'],
-                'price'=>$v['active_price'],
-                'yuanprice'=>$v['original_price'],
-            ],['itemid'=>$v['product_id']]);
+        $status = ActiveProducts::modifyActivePrice();
+        if($status>0){
+            Yii::$app->getSession()->setFlash('success', '调价成功');
+            $this->redirect(['/activity/products']);
+        }else{
+            Yii::$app->getSession()->setFlash('error', '调价失败');
+            $this->goBack();
         }
-        $this->redirect(['/activity/products']);
     }
 
     /**
@@ -146,16 +144,14 @@ class ActiveProductsController extends ActivityController
      */
     public function actionRecoveryActiveProductsPrice()
     {
-        $active_products = ActiveProducts::find()->all();
-        foreach ($active_products as $k => $v){
-            ActiveProducts::updateAll(['status'=>ActiveProducts::STATUS_DEFAULT], ['product_id'=>$v['product_id']]);
-            Product::updateAll([
-                'activeid'=>0,
-                'price'=>$v['original_price'],
-                'yuanprice'=>0,
-            ],['itemid'=>$v['product_id']]);
+        $status = ActiveProducts::recoveryPrice();
+        if($status>0){
+            Yii::$app->getSession()->setFlash('success', '恢复成功');
+            $this->redirect(['/activity/active-products']);
+        }else{
+            Yii::$app->getSession()->setFlash('error', '恢复失败');
+            $this->goBack();
         }
-        $this->redirect(['/activity/active-products']);
     }
 
     /**
@@ -163,11 +159,14 @@ class ActiveProductsController extends ActivityController
      */
     public function actionModifyActiveSalesPrice()
     {
-        $active_products = ActiveProducts::find()->where(['>', 'market_id', '0'])->all();
-        foreach($active_products as $k => $v){
-            Supply::updateAll(['activeid'=>Module::ACTIVE_ID, 'price'=>$v['market_active_price'], 'yuanprice'=>$v['market_original_price'],], ['pid'=>$v['product_id'], 'fid'=>$v['sales_id']]);
+        $status = ActiveProducts::modifySalesActivePrice();
+        if($status>0){
+            Yii::$app->getSession()->setFlash('success', '调价成功');
+            $this->redirect(['/activity/supply']);
+        }else{
+            Yii::$app->getSession()->setFlash('error', '调价失败');
+            $this->goBack();
         }
-        $this->redirect(['/activity/supply']);
     }
 
     /**
@@ -175,10 +174,29 @@ class ActiveProductsController extends ActivityController
      */
     public function actionRecoveryActiveSalesPrice()
     {
-        $active_products = ActiveProducts::find()->where(['>', 'market_id', '0'])->all();
-        foreach($active_products as $k => $v){
-            Supply::updateAll(['activeid'=>0, 'price'=>$v['market_original_price'], 'yuanprice'=>0,], ['pid'=>$v['product_id'], 'fid'=>$v['sales_id']]);
+        $status = ActiveProducts::recoverySalesPrice();
+        if($status>0){
+            Yii::$app->getSession()->setFlash('success', '恢复成功');
+            $this->redirect(['/activity/active-products']);
+        }else{
+            Yii::$app->getSession()->setFlash('error', '恢复失败');
+            $this->goBack();
         }
-        $this->redirect(['/activity/active-products']);
+    }
+
+    /**
+     * 调价
+     */
+    public function actionModifyPrice()
+    {
+
+    }
+
+    /**
+     * 恢复价格
+     */
+    public function actionRecoveryPrice()
+    {
+
     }
 }
