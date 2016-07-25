@@ -100,6 +100,10 @@ $config = [
         'promo' => [
             'class' => 'app\modules\promo\Module',
         ],
+        // 用户
+        'members' => [
+            'class' => 'app\modules\members\Module',
+        ],
     ],
     'params' => $params,
 ];
