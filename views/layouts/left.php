@@ -4,7 +4,7 @@
 
         <?= dmstr\widgets\Menu::widget(
             [
-                'options' => ['class' => 'sidebar-menu'],
+                'options' => ['class' => 'sidebar-menu', 'id'=>'metissidebarmenu'],
                 'items' => [
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
                     [
@@ -79,6 +79,27 @@
                             [
                                 'label' => '优惠码列表',
                                 'url' => Yii::$app->urlManager->createUrl('promo/promo'),
+                            ],
+                        ],
+                    ],
+                    [
+                        'label' => '会员管理',
+                        'icon' => 'fa fa-share',
+                        'url' => '#',
+                        'items'=>[
+                            [
+                                'label' => '会员列表',
+                                'url' => Yii::$app->urlManager->createUrl('members/members'),
+                            ],
+                            [
+                                'label' => '会员分类',
+                                'url' => '#',
+                                'items'=>[
+                                    [
+                                        'label'=>'大客户',
+                                        'url'=> Yii::$app->urlManager->createUrl('members/members/big-members'),
+                                    ]
+                                ],
                             ],
                         ],
                     ],

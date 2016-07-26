@@ -18,9 +18,17 @@ class DefaultController extends ActivityController
 {
     public function behaviors()
     {
-        $behaviors = parent::behaviors();
+        /*$behaviors = parent::behaviors();
         $behaviors['verbs']['actions'][] = ['delete-excel-active-products'=>['post']];
-        return $behaviors;
+        return $behaviors;*/
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete-excel-active-product' => ['POST'],
+                ],
+            ],
+        ];
     }
 
     public function actionIndex()

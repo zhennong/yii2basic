@@ -21,9 +21,11 @@ class AppAsset extends AssetBundle
         'web/css/site.css',
     ];
     public $js = [
+//        'web/js/app.min.js',
     ];
     public $depends = [
         'dmstr\web\AdminLteAsset',
         'fedemotta\datatables\DataTablesAsset',
+//        'app\assets\MetisMenuAsset',
     ];
 }

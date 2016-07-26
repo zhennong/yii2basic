@@ -2,6 +2,7 @@
 
 namespace app\modules\members\controllers;
 
+use app\modules\members\models\BigMembersSearch;
 use Yii;
 use app\modules\members\models\Members;
 use app\modules\members\models\MembersSearch;
@@ -23,7 +24,7 @@ class MembersController extends DefaultController
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => ['post'],
                 ],
             ],
         ];
@@ -36,6 +37,20 @@ class MembersController extends DefaultController
     public function actionIndex()
     {
         $searchModel = new MembersSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * 大客户
+     */
+    public function actionBigMembers()
+    {
+        $searchModel = new BigMembersSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

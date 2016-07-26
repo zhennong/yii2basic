@@ -106,7 +106,7 @@ $this->registerJs($updateJs);*/
                         'data-file_path' => $v['file_path'],
                     ]) ?>
                     <?php // Html::a('导入数据库', Yii::$app->urlManager->createUrl(['activity/default/import-excel-active-products-to-database', 'file_path'=>$v['file_path']]), ['data-confirm'=>'确定要导入吗？', 'style'=>'color:violet']) ?>
-                    <?=Html::a('恢复价格', Yii::$app->urlManager->createUrl(['activity/default/delete-excel-active-products', 'file_path' => $v['file_path']]), ['data-confirm'=>'确定要删除吗？', 'data-method' => 'post', 'style' => 'color:red']) ?>
+                    <?=Html::a('恢复价格', Yii::$app->urlManager->createUrl(['activity/default/delete-excel-active-products', 'file_path' => $v['file_path']]), ['data-method' => 'post', 'data-confirm'=>'确定要删除吗？', 'style' => 'color:red']) ?>
                 </td>
             </tr>
         <?php endforeach; ?>
