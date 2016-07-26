@@ -45,6 +45,9 @@ $config = [
         'assetManager' => [
             'basePath' => '@webroot/web/assets',
             'baseUrl' => '@web/web/assets',
+            'converter' => [
+                'class' => 'yii\web\AssetConverter',
+            ],
         ],
         /*
         'urlManager' => [
