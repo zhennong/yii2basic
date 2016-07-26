@@ -18,6 +18,7 @@ class LessAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
+        '//cdn.bootcss.com/less.js/2.7.0/less.min.js',
         'web/css/test.less',
     ];
 }
