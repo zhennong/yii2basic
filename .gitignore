@@ -36,3 +36,6 @@ phpunit.phar
 # ctags
 .tags
 .tags_sorted_by_file
+
+# log
+*.log
