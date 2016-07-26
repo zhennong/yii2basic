@@ -7,6 +7,6 @@
  */
 ?>
 
-<div class="test1">
+<div class="box">
     123456789
 </div>
