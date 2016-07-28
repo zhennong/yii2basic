@@ -2,10 +2,12 @@
 
 namespace app\modules\members\controllers;
 
+use app\components\Tools;
 use app\modules\members\models\BigMembersSearch;
 use Yii;
 use app\modules\members\models\Members;
 use app\modules\members\models\MembersSearch;
+use yii\data\SqlDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -50,9 +52,25 @@ class MembersController extends DefaultController
      */
     public function actionBigMembers()
     {
-        $searchModel = new BigMembersSearch();
+        /*$searchModel = new MembersSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);*/
+
+        $count = Yii::$app->db->createCommand("SELECT count(*) FROM ".Members::tableName()." WHERE regareaid=:regareaid", [':regareaid' => 17])->queryScalar();
+
+        $dataProvider = new SqlDataProvider([
+            'sql' => "SELECT * FROM ".Members::tableName()." WHERE regareaid=:regareaid",
+            'params' => [':regareaid' => 17],
+            'totalCount' => $count,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+        $searchModel = $dataProvider->getModels();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

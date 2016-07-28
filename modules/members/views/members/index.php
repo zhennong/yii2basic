@@ -26,9 +26,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'userid',
             'username',
-            'passport',
-            'company',
-            'password',
+            // 'passport',
+            // 'company',
+            // 'password',
             // 'cash',
             // 'payword',
             // 'email:email',
