@@ -48,9 +48,20 @@ class MembersController extends DefaultController
     }
 
     /**
-     * 大客户
+     * 有订单客户
      */
     public function actionBigMembers()
+    {
+        $searchModel = new BigMembersSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('big-members-index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionAgentMembers()
     {
         $searchModel = new BigMembersSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);

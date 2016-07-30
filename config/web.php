@@ -6,9 +6,9 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
-    'timeZone'=>'Asia/Chongqing',
-    'aliases'=>[
-        '@uploads'=>dirname(__DIR__) . '/web/uploads',
+    'timeZone' => 'Asia/Chongqing',
+    'aliases' => [
+        '@uploads' => dirname(__DIR__) . '/web/uploads',
     ],
     'components' => [
         'request' => [
@@ -116,13 +116,13 @@ if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
-        'allowedIPs'=>['192.168.0.*', '127.0.0.1', '::1'],
+        'allowedIPs' => ['192.168.0.*', '127.0.0.1', '::1'],
     ];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
-        'allowedIPs'=>['192.168.0.*', '127.0.0.1', '::1'],
+        'allowedIPs' => ['192.168.0.*', '127.0.0.1', '::1'],
     ];
 }
 

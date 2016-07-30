@@ -96,9 +96,13 @@
                                 'url' => '#',
                                 'items'=>[
                                     [
-                                        'label'=>'大客户',
+                                        'label'=>'有交易客户',
                                         'url'=> Yii::$app->urlManager->createUrl('members/members/big-members'),
-                                    ]
+                                    ],
+                                    [
+                                        'label'=>'代理商',
+                                        'url'=> Yii::$app->urlManager->createUrl('members/members/agent-members'),
+                                    ],
                                 ],
                             ],
                         ],
