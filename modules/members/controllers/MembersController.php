@@ -52,26 +52,10 @@ class MembersController extends DefaultController
      */
     public function actionBigMembers()
     {
-        /*$searchModel = new MembersSearch();
+        $searchModel = new BigMembersSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);*/
-
-        $count = Yii::$app->db->createCommand("SELECT count(*) FROM ".Members::tableName()." WHERE regareaid=:regareaid", [':regareaid' => 17])->queryScalar();
-
-        $dataProvider = new SqlDataProvider([
-            'sql' => "SELECT * FROM ".Members::tableName()." WHERE regareaid=:regareaid",
-            'params' => [':regareaid' => 17],
-            'totalCount' => $count,
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-        ]);
-        $searchModel = $dataProvider->getModels();
-        return $this->render('index', [
+        return $this->render('big-members-index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
