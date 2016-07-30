@@ -76,6 +76,30 @@ use Yii;
  */
 class Members extends \yii\db\ActiveRecord
 {
+    const IS_NOT_AGENT = 0;
+    const IS_AGENT = 1;
+
+    public static function getAgent()
+    {
+        return [
+            self::IS_NOT_AGENT=>'不是代理商',
+            self::IS_AGENT=>'代理商',
+        ];
+    }
+
+    const IS_NOT_ADMIN = 0;
+    const SUPER_ADMIN = 1;
+    const ORDINARY_ADMIN = 2;
+
+    public static function getAdmin()
+    {
+        return [
+            self::IS_NOT_ADMIN=>'不是管理员',
+            self::SUPER_ADMIN=>'超级管理员',
+            self::ORDINARY_ADMIN=>'普通管理员',
+        ];
+    }
+
     /**
      * @inheritdoc
      */

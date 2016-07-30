@@ -113,7 +113,39 @@ use Yii;
  */
 class Products extends \yii\db\ActiveRecord
 {
+    const STATUS_RECYCLE_BIN = 0;
+    const STATUS_FAILED = 1;
+    const STATUS_WAITING_FOR_REVIEW = 2;
     const STATUS_SHELVE = 3;
+    const STATUS_EXPIRED = 4;
+    const STATUS_SHELF = 5;
+    const STATUS_AUTO_SHELF_BY_DAYS = 6; // 自动下架产品
+
+    public static function getStatus()
+    {
+        return [
+            self::STATUS_RECYCLE_BIN => '回收站',
+            self::STATUS_FAILED => '审核未通过',
+            self::STATUS_WAITING_FOR_REVIEW => '等待审核',
+            self::STATUS_SHELVE => '上架发布',
+            self::STATUS_EXPIRED => '过期',
+            self::STATUS_SHELF => '临时下架',
+            self::STATUS_AUTO_SHELF_BY_DAYS => '自动下架产品',
+        ];
+    }
+
+    const AUTO_SHELF_BY_DAYS = 2150; //计时下架天数
+
+    const TYPE_DEFAULT = 0;
+    const TYPE_BOUTIQUE = 1; // 精品
+
+    public static function getTpye()
+    {
+        return [
+            self::TYPE_DEFAULT=>'默认',
+            self::TYPE_BOUTIQUE=>'精品',
+        ];
+    }
     
     public static function tableName()
     {

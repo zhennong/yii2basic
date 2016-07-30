@@ -80,6 +80,47 @@ use Yii;
  */
 class Trades extends \yii\db\ActiveRecord
 {
+    const STATUS_TRADE_CREAT = 0;
+    const STATUS_WAIT_PAY = 1;
+    const STATUS_BUYER_PAY = 2;
+    const STATUS_DELIVER = 3;
+    const STATUS_SUCCESS = 4;
+    const STATUS_APLAY_FOR_REFUND = 5;
+    const STATUS_HAS_REFUND_TO_BUYER = 6;
+    const STATUS_HAS_PAY = 7;
+    const STATUS_BUYER_CLOSE = 8;
+    const STATUS_SELLER_CLOSE = 9;
+    const STATUS_IN_PROCESS = 10;
+    const STATUS_HAS_REMIND_TO_BUYER = 11;
+
+    // 订单状态
+    public static function getStatus()
+    {
+        return [
+            self::STATUS_TRADE_CREAT=>'买家发起订单,等待卖家确认',
+            self::STATUS_WAIT_PAY=>'卖家已确认订单,等待买家付款',
+            self::STATUS_BUYER_PAY=>'买家已付款,等待卖家发货',
+            self::STATUS_DELIVER=>'卖家已发货,等待买家确认',
+            self::STATUS_SUCCESS=>'交易成功',
+            self::STATUS_APLAY_FOR_REFUND=>'买家申请退款',
+            self::STATUS_HAS_REFUND_TO_BUYER=>'已退款给买家',
+            self::STATUS_HAS_PAY=>'已付款给卖家',
+            self::STATUS_BUYER_CLOSE=>'买家关闭交易',
+            self::STATUS_SELLER_CLOSE=>'卖家关闭交易',
+            self::STATUS_IN_PROCESS=>'订单处理中',
+            self::STATUS_HAS_REMIND_TO_BUYER=>'已通知客户提货，7日后将交易将自动完成',
+        ];
+    }
+
+    const AUTO_RECEIPT_DAYS = 60; // 自动确认收货天数
+    const AUTO_RECEIPT_REMIND_DAYS_30 = 30; // 自动确认收货提醒天数
+    const AUTO_RECEIPT_REMIND_DAYS_57 = 57; // 自动确认收货提醒天数
+    const PROLONG_DAYS = 7; // 延长收货天数
+
+    const ACTIVE_TYPE_NULL = 0; // 不是活动
+    const ACTIVE_TYPE_DAILY = 1; // 每日特价
+    const ACTIVE_TYPE_ACT = 2; //活动
+
     /**
      * @inheritdoc
      */
