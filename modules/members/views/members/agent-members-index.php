@@ -47,8 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'format'=>'integer',
             'hAlign'=>'right',
             'width'=>'100px',
-            'pageSummary'=>true,
-            'filter'=>Html::input('text', 'BigMembersSearch[amountStart]', $searchModel->amountStart, ['class'=>'form-control col-lg-6']).Html::input('text', 'BigMembersSearch[amountEnd]', $searchModel->amountEnd, ['class'=>'form-control col-lg-6']),
+            'pageSummary'=>true
         ],
         // 'passport',
         // 'company',

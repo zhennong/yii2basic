@@ -16,10 +16,13 @@ class BigMembersSearch extends MembersSearch
     public $tradesTotal;
     public $tradesAmount;
 
+    public $amountStart;
+    public $amountEnd;
+
     public function rules()
     {
         $data = parent::rules();
-        $data[] = [['tradesCount', 'tradesTotal', 'tradesAmount',], 'double'];
+        $data[] = [['tradesCount', 'tradesTotal', 'tradesAmount', 'amountStart', 'amountEnd'], 'double'];
         return $data;
     }
 
@@ -138,16 +141,22 @@ class BigMembersSearch extends MembersSearch
         $query->andHaving(['>', 'tradesTotal', 0]);
         $query->andHaving(['>', 'tradesAmount', 0]);
         if($this->tradesCount){
-            $this->tradesCount = (double)$this->tradesCount;
             $query->andHaving(['tradesCount'=>$this->tradesCount]);
         }
         if($this->tradesTotal){
-            $this->tradesTotal = (double)$this->tradesTotal;
             $query->andHaving(['tradesTotal'=>$this->tradesTotal]);
         }
         if($this->tradesAmount){
             $this->tradesAmount = (double)$this->tradesAmount;
             $query->andHaving(['tradesAmount'=>$this->tradesAmount]);
+        }
+        if($this->amountStart){
+            $this->amountStart = (double)$this->amountStart;
+            $query->andHaving(['>=', 'tradesAmount', $this->amountStart]);
+        }
+        if($this->amountEnd){
+            $this->amountEnd = (double)$this->amountEnd;
+            $query->andHaving(['<=', 'tradesAmount', $this->amountEnd]);
         }
 
         return $dataProvider;

@@ -66,7 +66,7 @@ class MembersController extends DefaultController
         $searchModel = new BigMembersSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('big-members-index', [
+        return $this->render('agent-members-index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
