@@ -3,6 +3,7 @@
 namespace app\modules\members\controllers;
 
 use app\components\Tools;
+use app\modules\members\models\AgentMembersSearch;
 use app\modules\members\models\BigMembersSearch;
 use Yii;
 use app\modules\members\models\Members;
@@ -63,7 +64,7 @@ class MembersController extends DefaultController
 
     public function actionAgentMembers()
     {
-        $searchModel = new BigMembersSearch();
+        $searchModel = new AgentMembersSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('agent-members-index', [
