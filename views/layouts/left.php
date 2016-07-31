@@ -107,6 +107,31 @@
                             ],
                         ],
                     ],
+                    [
+                        'label' => '交易管理',
+                        'icon' => 'fa fa-share',
+                        'url' => '#',
+                        'items'=>[
+                            [
+                                'label' => '交易列表',
+                                'url' => Yii::$app->urlManager->createUrl('trades/trades'),
+                            ],
+                            [
+                                'label' => '交易分类',
+                                'url' => '#',
+                                'items'=>[
+                                    [
+                                        'label'=>'有交易客户',
+                                        'url'=> Yii::$app->urlManager->createUrl('members/members/big-members'),
+                                    ],
+                                    [
+                                        'label'=>'代理商',
+                                        'url'=> Yii::$app->urlManager->createUrl('members/members/agent-members'),
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
                 ],
             ]
         ) ?>

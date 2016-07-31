@@ -107,6 +107,10 @@ $config = [
         'members' => [
             'class' => 'app\modules\members\Module',
         ],
+        // 交易
+        'trades' => [
+            'class' => 'app\modules\trades\Module',
+        ],
     ],
     'params' => $params,
 ];
