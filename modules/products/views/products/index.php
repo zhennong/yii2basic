@@ -49,7 +49,10 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'pptword',
             // 'hits',
             // 'old_img',
-            // 'thumb',
+            [
+                'attribute'=>'thumb',
+                'format' => ['image',['width'=>'30','height'=>'30',]],
+            ],
             // 'thumb1',
             // 'thumb2',
             // 'username',

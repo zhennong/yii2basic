@@ -84,4 +84,22 @@ class Tools
         }
         return $data;
     }
+
+    /**
+     * 查看图片是否存在
+     */
+    public static function isHasFile($filepath)
+    {
+        if (file_exists($filepath)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    public static function get404path()
+    {
+        $jpg404Url = \Yii::$app->params['dtUrl']."404.jpg";
+        return $jpg404Url;
+    }
 }

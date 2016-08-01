@@ -12,23 +12,19 @@ use yii\data\ActiveDataProvider;
  */
 class AgentMembersSearch extends MembersSearch
 {
-    public $tradesCount;
-    public $tradesTotal;
-    public $tradesAmount;
-
-    public $amountStart;
-    public $amountEnd;
 
     public function rules()
     {
         $data = parent::rules();
-        $data[] = [['tradesCount', 'tradesTotal', 'tradesAmount', 'amountStart', 'amountEnd'], 'double'];
         return $data;
     }
 
     public function search($params)
     {
-        $query = self::find();
+        $query = self::find()->joinWith('agentDownLine')
+            ->where([
+                self::tableName().".is_agent"=>self::IS_AGENT,
+            ]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

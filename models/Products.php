@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\components\Tools;
 use Yii;
 
 /**
@@ -284,5 +285,37 @@ class Products extends \yii\db\ActiveRecord
             'daily_indulgence_price' => 'Daily Indulgence Price',
             'addeditor' => 'Addeditor',
         ];
+    }
+
+    /**
+     * @param $thumb
+     * 判断是否存在缩略图
+     */
+    public static function isHasThumb($thumb)
+    {
+        if (!empty($thumb)){
+            // 判断图片是否存在，存在返回元路径
+            preg_match('/^(http:\/\/)?([^\/]+)/i',$thumb,$match);
+            $num = $match[0];
+            $num = strlen($num);
+            $thumb_root = substr($thumb,$num);
+            $file_path = Yii::$app->params['thumbRoot'].$thumb_root;
+            if(file_exists($file_path)){
+                return $file_path;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+    
+    public static function getThumbUrl($thumb)
+    {
+        if(self::isHasThumb($thumb)){
+            return $thumb;
+        }else{
+            return Tools::get404path();
+        }
     }
 }
