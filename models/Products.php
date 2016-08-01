@@ -121,6 +121,7 @@ class Products extends \yii\db\ActiveRecord
     const STATUS_EXPIRED = 4;
     const STATUS_SHELF = 5;
     const STATUS_AUTO_SHELF_BY_DAYS = 6; // 自动下架产品
+    const STATUS_NO_PICTURE = 7; // 暂时没有图片的产品
 
     public static function getStatus()
     {
@@ -132,6 +133,7 @@ class Products extends \yii\db\ActiveRecord
             self::STATUS_EXPIRED => '过期',
             self::STATUS_SHELF => '临时下架',
             self::STATUS_AUTO_SHELF_BY_DAYS => '自动下架产品',
+            self::STATUS_NO_PICTURE => '暂时没有图片的产品',
         ];
     }
 
