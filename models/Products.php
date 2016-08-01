@@ -299,12 +299,12 @@ class Products extends \yii\db\ActiveRecord
             $num = $match[0];
             $num = strlen($num);
             $thumb_root = substr($thumb,$num);
-            $file_path = Yii::$app->params['thumbRoot'].$thumb_root;
-            if(file_exists($file_path)){
+            return $file_path = Yii::$app->params['thumbRoot'].$thumb_root;
+            /*if(file_exists($file_path)){
                 return $file_path;
             }else{
                 return false;
-            }
+            }*/
         }else{
             return false;
         }
