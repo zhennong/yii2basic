@@ -59,8 +59,6 @@ class TradesSearch extends Trades
             return $dataProvider;
         }
 
-        Tools::_vp((double)$this->amount,0,2);
-
         // grid filtering conditions
         $query->andFilterWhere([
             'itemid' => $this->itemid,
