@@ -30,7 +30,10 @@ class BigMembersSearch extends MembersSearch
     {
         $query = self::find();
         $query->select([
-            self::tableName().".*",
+            self::tableName().".userid",
+            self::tableName().".username",
+            self::tableName().".truename",
+            self::tableName().".mobile",
             "COUNT(".Trades::tableName().".itemid) AS tradesCount",
             "SUM(".Trades::tableName().".total) AS tradesTotal",
             "SUM(".Trades::tableName().".amount) AS tradesAmount",
