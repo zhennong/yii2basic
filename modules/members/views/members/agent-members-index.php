@@ -1,7 +1,7 @@
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\helpers\Html;
+use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\members\models\MembersSearch */
@@ -22,7 +22,30 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            [
+                'class' => \kartik\grid\SerialColumn::className(),
+                'contentOptions' => ['class' => 'kartik-sheet-style'],
+                'width' => '36px',
+                'header' => '',
+                'headerOptions' => ['class' => 'kartik-sheet-style'],
+            ],
+            [
+                'class' => \kartik\grid\RadioColumn::className(),
+                'width' => '36px',
+                'headerOptions' => ['class' => 'kartik-sheet-style'],
+            ],
+            [
+                'class' => \kartik\grid\ExpandRowColumn::className(),
+                'width' => '50px',
+                'value' => function ($model, $key, $index, $column) {
+                    return GridView::ROW_COLLAPSED;
+                },
+                'detail' => function ($model, $key, $index, $column) {
+                    return Yii::$app->controller->renderPartial('agent-downline-list', ['model' => $model]);
+                },
+                'headerOptions' => ['class' => 'kartik-sheet-style'],
+                'expandOneOnly' => true,
+            ],
 
             'userid',
             'username',
@@ -38,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'online',
             // 'avatar',
             // 'gender',
-            // 'truename',
+            'truename',
             'mobile',
             // 'msn',
             // 'qq',
@@ -91,7 +114,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'begoodatcatid',
             // 'experttype',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => \kartik\grid\ActionColumn::className()],
         ],
     ]); ?>
 </div>

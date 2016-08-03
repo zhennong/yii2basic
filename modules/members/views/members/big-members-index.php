@@ -121,7 +121,15 @@ $this->params['breadcrumbs'][] = $this->title;
     ];
     $fullExportMenu = ExportMenu::widget([
         'dataProvider' => $dataProvider,
-        'columns' => $columns,
+        'columns' => [
+            'userid',
+            'username',
+            'truename',
+            'mobile',
+            'tradesCount',
+            'tradesTotal',
+            'tradesAmount',
+        ],
         'target' => ExportMenu::TARGET_BLANK,
         'fontAwesome' => true,
         'pjaxContainerId' => 'kv-pjax-container',

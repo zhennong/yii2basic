@@ -21,7 +21,7 @@ class AgentMembersSearch extends MembersSearch
 
     public function search($params)
     {
-        $query = self::find()->joinWith('agentDownLine')
+        $query = self::find()
             ->where([
                 self::tableName().".is_agent"=>self::IS_AGENT,
             ]);

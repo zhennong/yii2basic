@@ -7,6 +7,7 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'timeZone' => 'Asia/Chongqing',
+    'language' => 'zh-CN',
     'aliases' => [
         '@uploads' => dirname(__DIR__) . '/web/uploads',
     ],
