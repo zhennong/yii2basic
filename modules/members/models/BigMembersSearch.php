@@ -28,6 +28,8 @@ class BigMembersSearch extends MembersSearch
 
     public function search($params)
     {
+        // 筛选出已消费用户，amount订单总额=》userid
+        // 查找到用户电话
         $query = self::find();
         $query->select([
             self::tableName().".userid",
