@@ -121,6 +121,15 @@ class Trades extends \yii\db\ActiveRecord
     const ACTIVE_TYPE_DAILY = 1; // 每日特价
     const ACTIVE_TYPE_ACT = 2; //活动
 
+    public static function getActiveType()
+    {
+        return [
+            self::ACTIVE_TYPE_NULL=>'没有活动',
+            self::ACTIVE_TYPE_DAILY=>'每日特价',
+            self::ACTIVE_TYPE_ACT=>'公司活动',
+        ];
+    }
+
     /**
      * @inheritdoc
      */

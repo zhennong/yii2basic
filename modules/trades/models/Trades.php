@@ -9,7 +9,12 @@
 namespace app\modules\trades\models;
 
 
+use app\models\Members;
+
 class Trades extends \app\models\Trades
 {
-
+    public function getMember()
+    {
+        return $this->hasOne(Members::className(), ['username'=>'buyer']);
+    }
 }
