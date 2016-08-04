@@ -74,6 +74,14 @@ class MembersController extends DefaultController
     }
 
     /**
+     * 2016-01-01至今注册的客户(未购买)
+     */
+    public function actionNewNoTradeMember()
+    {
+        return $this->render('new-no-trade-member');
+    }
+
+    /**
      * Displays a single Members model.
      * @param string $id
      * @return mixed

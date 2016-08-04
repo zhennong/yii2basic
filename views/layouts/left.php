@@ -103,6 +103,11 @@
                                         'label'=>'代理商',
                                         'url'=> Yii::$app->urlManager->createUrl('members/members/agent-members'),
                                     ],
+
+                                    [
+                                        'label'=>'2016-01-01至今注册的客户(未购买)',
+                                        'url'=> Yii::$app->urlManager->createUrl('members/members/new-no-trade-member'),
+                                    ],
                                 ],
                             ],
                         ],
@@ -123,10 +128,6 @@
                                     [
                                         'label'=>'有交易客户',
                                         'url'=> Yii::$app->urlManager->createUrl('members/members/big-members'),
-                                    ],
-                                    [
-                                        'label'=>'代理商',
-                                        'url'=> Yii::$app->urlManager->createUrl('members/members/agent-members'),
                                     ],
                                 ],
                             ],
