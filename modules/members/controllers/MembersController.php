@@ -82,6 +82,14 @@ class MembersController extends DefaultController
     }
 
     /**
+     * 去年818购买过的客户
+     */
+    public function actionMemberHasBuyLast818()
+    {
+        return $this->render('member-has-buy-last818');
+    }
+
+    /**
      * Displays a single Members model.
      * @param string $id
      * @return mixed
