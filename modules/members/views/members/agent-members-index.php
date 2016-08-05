@@ -15,45 +15,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <?php
-    $agents = \app\models\Members::find()->where(['or', ['is_agent' => 1], ['>', 'topagentid', 0]])->select(['areaid', 'userid', 'topagentid', 'username', 'truename', 'mobile'])->asArray()->all();
-    $agents = \app\components\Tools::list2tree($agents, 'userid', 'topagentid');
-    ?>
-
-    <p>
-    <table>
-        <thead>
-        <tr>
-            <th>areaid</th>
-            <th>userid</th>
-            <th>username</th>
-            <th>truename</th>
-            <th>mobile</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($agents as $k => $v): ?>
-            <tr>
-                <td><?= $v['areaid'] ?></td>
-                <td><?= $v['userid'] ?></td>
-                <td><?= $v['username'] ?></td>
-                <td><?= $v['truename'] ?></td>
-                <td><?= $v['mobile'] ?></td>
-            </tr>
-            <?php if (isset($v['_child'])): foreach ($v['_child'] as $k1 => $v1): ?>
-                <tr>
-                    <td></td>
-                    <td><?= $v1['userid'] ?></td>
-                    <td><?= $v1['username'] ?></td>
-                    <td><?= $v1['truename'] ?></td>
-                    <td><?= $v1['mobile'] ?></td>
-                </tr>
-            <?php endforeach; endif; ?>
-        <?php endforeach; ?>
-        </tbody>
-    </table>
-    </p>
-
     <p>
         <?= Html::a('Create Members', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
@@ -156,4 +117,41 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => \kartik\grid\ActionColumn::className()],
         ],
     ]); ?>
+
+    <?php
+    $agents = \app\models\Members::find()->where(['or', ['is_agent' => 1], ['>', 'topagentid', 0]])->select(['areaid', 'userid', 'topagentid', 'username', 'truename', 'mobile'])->asArray()->all();
+    $agents = \app\components\Tools::list2tree($agents, 'userid', 'topagentid');
+    ?>
+
+    <table>
+        <thead>
+        <tr>
+            <th>areaid</th>
+            <th>userid</th>
+            <th>username</th>
+            <th>truename</th>
+            <th>mobile</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($agents as $k => $v): ?>
+            <tr>
+                <td><?= $v['areaid'] ?></td>
+                <td><?= $v['userid'] ?></td>
+                <td><?= $v['username'] ?></td>
+                <td><?= $v['truename'] ?></td>
+                <td><?= $v['mobile'] ?></td>
+            </tr>
+            <?php if (isset($v['_child'])): foreach ($v['_child'] as $k1 => $v1): ?>
+                <tr>
+                    <td></td>
+                    <td><?= $v1['userid'] ?></td>
+                    <td><?= $v1['username'] ?></td>
+                    <td><?= $v1['truename'] ?></td>
+                    <td><?= $v1['mobile'] ?></td>
+                </tr>
+            <?php endforeach; endif; ?>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
 </div>
