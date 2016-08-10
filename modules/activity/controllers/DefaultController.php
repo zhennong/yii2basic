@@ -25,7 +25,7 @@ class DefaultController extends ActivityController
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete-excel-active-product' => ['POST'],
+                    'delete-excel-active-products' => ['post'],
                 ],
             ],
         ];
