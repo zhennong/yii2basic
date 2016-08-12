@@ -84,6 +84,10 @@ $config = [
         'datecontrol' => [
             'class' => '\kartik\datecontrol\Module'
         ],
+        // 系统
+        'system' => [
+            'class' => 'app\modules\system\Module',
+        ],
         // 活动
         'activity' => [
             'class' => 'app\modules\activity\Module',

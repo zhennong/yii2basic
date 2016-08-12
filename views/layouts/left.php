@@ -8,6 +8,11 @@
                 'items' => [
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
                     [
+                        'label' => '系统监控',
+                        'icon' => 'fa fa-share',
+                        'url' => Yii::$app->urlManager->createUrl('system'),
+                    ],
+                    [
                         'label' => '活动管理',
                         'icon' => 'fa fa-share',
                         'url' => '#',
