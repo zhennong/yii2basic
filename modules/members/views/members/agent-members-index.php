@@ -119,7 +119,8 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 
     <?php
-    $agents = \app\models\Members::find()->where(['or', ['is_agent' => 1], ['>', 'topagentid', 0]])->select(['areaid', 'userid', 'topagentid', 'username', 'truename', 'mobile'])->asArray()->all();
+    $arr = [36710,46026,43525,41249,41226,51798,51657,47123,58754,86461,87023,37365,35283,51653,55724,44180,59185,53692,43885,51571,51739,53920,51806,58758,63298,86535,86537,58757,57296,57295,86801,44392,43881,48993,48989,35031];
+    $agents = \app\models\Members::find()->where(['or', ['and' ,'is_agent' => 1, ['in', 'userid', $arr]], ['>', 'topagentid', 0]])->select(['areaid', 'userid', 'topagentid', 'username', 'truename', 'mobile'])->asArray()->all();
     $agents = \app\components\Tools::list2tree($agents, 'userid', 'topagentid');
     ?>
 
