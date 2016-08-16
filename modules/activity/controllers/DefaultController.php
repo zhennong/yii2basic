@@ -138,8 +138,8 @@ class DefaultController extends ActivityController
         $list = ExcelTool::changeExcelToListForActiveProducts($file_path);
         $transaction = Yii::$app->db->beginTransaction();
         try{
-            ActiveProducts::recoveryPrice($list);
-            ActiveProducts::recoverySalesPrice($list);
+            /*ActiveProducts::recoveryPrice($list);
+            ActiveProducts::recoverySalesPrice($list);*/
             foreach($list as $k => $v){
                 ActiveProducts::deleteAll(['active_id'=>$v['active_id'], 'product_id'=>$v['product_id']]);
                 ActiveGoods::deleteAll(['actid'=>$v['active_id'], 'pid'=>$v['product_id']]);
