@@ -81,7 +81,8 @@ class DefaultController extends ActivityController
                 $is_save = $model->file->saveAs($saveAs);
                 if($is_save){
                     $list = ExcelTool::changeExcelToListForActiveProducts($saveAs);
-                    $messages = ExcelTool::checkExcelActiveProducts($list);
+                    $messages = ExcelTool::checkExcelActiveProducts1($list);
+//                    $messages = [];
                     if(count($messages)>0){
                         unlink($saveAs);
                         $messages_render = $this->renderPartial('import-active-products', [
@@ -136,7 +137,6 @@ class DefaultController extends ActivityController
     {
         $list = ExcelTool::changeExcelToListForActiveProducts($file_path);
         $transaction = Yii::$app->db->beginTransaction();
-        Tools::_vp($list);
         try{
             ActiveProducts::recoveryPrice($list);
             ActiveProducts::recoverySalesPrice($list);

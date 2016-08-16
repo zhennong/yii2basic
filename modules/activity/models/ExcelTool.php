@@ -8,6 +8,8 @@
 
 namespace app\modules\activity\models;
 
+use app\models\Products;
+use app\models\Supply;
 use Yii;
 use app\components\Tools;
 use yii\db\Exception;
@@ -56,13 +58,14 @@ class ExcelTool
     {
         $product_ids = [];
         $messages = [];
+        $active_id = Active::getLastActiveId();
         foreach ($list as $k => $v) {
             if (in_array($v['product_id'], $product_ids)) {
                 $messages[] = ['type' => 'danger', 'product_id' => $v['product_id'], 'msg' => '此产品重复'];
             } else {
-                $this_product_info = Product::find()->where(['itemid' => $v['product_id']])->one();
-                $find_active_products = ActiveProducts::findOne(['product_id' => $v['product_id'], 'active_id' => Active::getLastActiveId()]);
-                if ($v['active_id'] != Active::getLastActiveId()) {
+                $this_product_info = Product::find()->select(['activeid', 'status', 'price'])->where(['itemid' => $v['product_id']])->one();
+                $find_active_products = ActiveProducts::find()->select(['product_id'])->where(['product_id' => $v['product_id'], 'active_id' => $active_id])->one();
+                if ($v['active_id'] != $active_id) {
                     $messages[] = ['type' => 'danger', 'product_id' => $v['product_id'], 'msg' => '活动id不正确'];
                 } elseif (!$this_product_info) {
                     $messages[] = ['type' => 'danger', 'product_id' => $v['product_id'], 'msg' => '没有此产品'];
@@ -83,7 +86,7 @@ class ExcelTool
                         if (!$sales_id) {
                             $messages[] = ['type' => 'warning', 'product_id' => $v['product_id'], 'msg' => '没有门市'];
                         } else {
-                            $sales_price = $sales_id > 0 ? Supply::findOne(['pid' => $v['product_id'], 'fid' => $sales_id])->price : 0;
+                            $sales_price = $sales_id > 0 ? Supply::find()->select(['price'])->where(['pid' => $v['product_id'], 'fid' => $sales_id])->one()->price : 0;
                             if ($sales_price != $v['market_original_price']) {
                                 $messages[] = ['type' => 'warning', 'product_id' => $v['product_id'], 'msg' => '门市原价不符'];
                             } elseif ($sales_price < $v['market_active_price']) {
@@ -97,6 +100,58 @@ class ExcelTool
         }
         return $messages;
     }
+    public static function checkExcelActiveProducts1($list)
+    {
+        $product_ids = [];
+        $messages = [];
+        $active_id = Active::getLastActiveId();
+        $products = Products::find()->select(['itemid', 'activeid', 'status', 'price'])->indexBy('itemid')->asArray()->all();
+        $active_products = ActiveProducts::find()->select(['product_id'])->where(['active_id' => $active_id])->indexBy('product_id')->asArray()->all();
+//        $supplies = Supply::find()->select(['fid', 'price'])->indexBy('fid')->asArray()->all();
+        $sales_ids_arr = Supply::getSalesIdsArr();
+        $sales_price_arr = Supply::getSalesPriceArr();
+        foreach($list as $k => $v){
+            $product_id = $v['product_id'];
+            if (in_array($product_id, $product_ids)) {
+                $messages[] = ['type' => 'danger', 'product_id' => $product_id, 'msg' => '此产品重复'];
+            } else {
+                $product_info = isset($products[$product_id])?$products[$product_id]:false;
+                Tools::_vp($product_info,0,2);
+                if ($v['active_id'] != $active_id) {
+                    $messages[] = ['type' => 'danger', 'product_id' => $product_id, 'msg' => '活动id不正确'];
+                } elseif (!$product_info) {
+                    $messages[] = ['type' => 'danger', 'product_id' => $product_id, 'msg' => '没有此产品'];
+                } elseif (isset($active_products[$product_id])) {
+                    $messages[] = ['type' => 'warning', 'product_id' => $product_id, 'msg' => '已存在此产品'];
+                } elseif ($product_info['activeid'] > 0) {
+                    $messages[] = ['type' => 'danger', 'product_id' => $product_id, 'msg' => '当前产品正在活动中'];
+                } elseif ($product_info['status'] != Product::STATUS_SHELVE) {
+                } elseif ($product_info['price'] == 0) {
+                    $messages[] = ['type' => 'warning', 'product_id' => $product_id, 'msg' => '当前产品并未上架'];
+                } elseif ($product_info['price'] < $v['active_price'] || $product_info['price'] == $v['active_price']) {
+                    $messages[] = ['type' => 'danger', 'product_id' => $product_id, 'msg' => '活动价格应该小于当前产品价格'];
+                } elseif ($product_info['price'] != $v['original_price']) {
+                    $messages[] = ['type' => 'warning', 'product_id' => $product_id, 'msg' => '原价与当前产品价格不符'];
+                } else {
+                    if ($v['market_id'] > 0) {
+                        $sales_id = Sales::getSalesIdFromProductIdAndMarketId1($sales_ids_arr, $product_id, $v['market_id']);
+                        if (!$sales_id) {
+                            $messages[] = ['type' => 'warning', 'product_id' => $product_id, 'msg' => '没有门市'];
+                        } else {
+                            $sales_price = $sales_id > 0 ? Supply::find()->select(['price'])->where(['pid' => $product_id, 'fid' => $sales_id])->one()->price : 0;
+                            if ($sales_price != $v['market_original_price']) {
+                                $messages[] = ['type' => 'warning', 'product_id' => $product_id, 'msg' => '门市原价不符'];
+                            } elseif ($sales_price < $v['market_active_price']) {
+                                $messages[] = ['type' => 'warning', 'product_id' => $product_id, 'msg' => '门市活动底价比原底价高'];
+                            }
+                        }
+                    }
+                }
+                $product_ids[] = $product_id;
+            }
+        }
+        return $messages;
+    }
 
     /**
      * 由list插入数据到数据库
@@ -105,8 +160,8 @@ class ExcelTool
     {
         $ActiveGoods = new ActiveGoods();
         $ActvieProducts = new ActiveProducts();
-        /*ActiveGoods::deleteAll(['actid' => Active::getLastActiveId()]);
-        ActiveProducts::deleteAll(['active_id' => Active::getLastActiveId()]);*/
+        /*ActiveGoods::deleteAll(['actid' => $active_id]);
+        ActiveProducts::deleteAll(['active_id' => $active_id]);*/
         $status = 1;
         $transaction = Yii::$app->db->beginTransaction();
         try {

@@ -66,9 +66,9 @@ class Sales extends \yii\db\ActiveRecord
     public static function getSalesIdFromProductIdAndMarketId($product_id, $market_id)
     {
         $sales_id = 0;
-        $supply_info = Supply::find()->where(['pid'=>$product_id])->all();
+        $supply_info = Supply::find()->select(['fid'])->where(['pid'=>$product_id])->all();
         foreach($supply_info as $k => $v){
-            $sales_info = Sales::find()->where(['id'=>$v['fid']])->all();
+            $sales_info = Sales::find()->select(['id', 'marketid'])->where(['id'=>$v['fid']])->all();
             foreach($sales_info as $k1 => $v1){
                 if ($v1['marketid']==$market_id){
                     $sales_id = $v1['id'];
@@ -76,5 +76,17 @@ class Sales extends \yii\db\ActiveRecord
             }
         }
         return $sales_id;
+    }
+
+    public static function getSalesIdFromProductIdAndMarketId1($sales_arr, $product_id, $market_id)
+    {
+        $sales_id = isset($sales_arr[$market_id][$product_id])?$sales_arr[$market_id][$product_id]:0;
+        return $sales_id;
+    }
+
+    public static function getSalesPriceFromProductIdAndMarketId1($sales_price_arr, $product_id, $market_id)
+    {
+        $sales_price = isset($sales_price_arr[$market_id][$product_id])?$sales_price_arr[$market_id][$product_id]:0;
+        return $sales_price;
     }
 }

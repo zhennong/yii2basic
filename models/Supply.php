@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\components\Tools;
 use Yii;
 
 /**
@@ -74,5 +75,36 @@ class Supply extends \yii\db\ActiveRecord
             'pid' => 'Pid',
             'linkpid' => 'Linkpid',
         ];
+    }
+
+    /**
+     * 获取所有的供应信息
+     */
+    public static function getAllSupplyDetail()
+    {
+        $sql = "SELECT supply.pid AS product_id, sales.id AS sales_id, supply.price AS price, market.id AS market_id FROM ".self::tableName()." AS supply 
+LEFT JOIN ".Sales::tableName()." AS sales ON supply.fid = sales.id
+LEFT JOIN ".Market::tableName()." AS market ON sales.marketid = market.id
+WHERE market.id IN(3,5,7)";
+        $res = Yii::$app->db->createCommand($sql)->queryAll();
+        return $res;
+    }
+
+    public static function getSalesIdsArr()
+    {
+        $x = self::getAllSupplyDetail();
+        foreach ($x as $k => $v){
+            $y[$v['market_id']][$v['product_id']] = $v['sales_id'];
+        }
+        return $y;
+    }
+
+    public static function getSalesPriceArr()
+    {
+        $x = self::getAllSupplyDetail();
+        foreach ($x as $k => $v){
+            $y[$v['market_id']][$v['product_id']] = $v['price'];
+        }
+        return $y;
     }
 }
