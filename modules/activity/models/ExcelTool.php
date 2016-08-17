@@ -59,9 +59,9 @@ class ExcelTool
     {
         $x = Yii::$app->cache->get('active_products_index');
         if ($x){
-            Tools::_vp('get active_products_index',0,3);//
+//            Tools::_vp('get active_products_index',0,3);//
         }else{
-            Tools::_vp('set active_products_index',0,3);//
+//            Tools::_vp('set active_products_index',0,3);//
             $x = ActiveProducts::getActiveProductsIndex();
             Yii::$app->cache->set('active_products_index', $x, 60);
         }
