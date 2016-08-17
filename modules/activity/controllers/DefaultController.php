@@ -40,34 +40,6 @@ class DefaultController extends ActivityController
     }
 
     /**
-     * 导入活动产品
-     */
-    public function actionImportActiveProducts()
-    {
-        $staticActiveProducts = ActiveProducts::getStaticActiveProducts();
-        $messages = ExcelTool::checkExcelActiveProducts($staticActiveProducts);
-        return $this->render('import-active-products', [
-            'messages' => $messages,
-        ]);
-    }
-
-    /**
-     * 由php文件插入数据到数据库
-     */
-    public function actionModifyActiveProducts()
-    {
-        $staticActiveProducts = ActiveProducts::getStaticActiveProducts();
-        $status = ExcelTool::importListActiveProductsToDatabase($staticActiveProducts);
-        if($status>0){
-            Yii::$app->session->setFlash('success', '导入成功');
-            $this->redirect(['/activity/active-products']);
-        }else{
-            Yii::$app->session->setFlash('error', '导入失败');
-            $this->goBack();
-        }
-    }
-
-    /**
      * 上传excel活动产品
      */
     public function actionExcelImportActiveProducts()
