@@ -57,7 +57,7 @@ class DefaultController extends ActivityController
     public function actionModifyActiveProducts()
     {
         $staticActiveProducts = ActiveProducts::getStaticActiveProducts();
-        $status = ExcelTool::importListlActiveProductsToDatabase($staticActiveProducts);
+        $status = ExcelTool::importListActiveProductsToDatabase($staticActiveProducts);
         if($status>0){
             Yii::$app->session->setFlash('success', '导入成功');
             $this->redirect(['/activity/active-products']);
@@ -81,8 +81,7 @@ class DefaultController extends ActivityController
                 $is_save = $model->file->saveAs($saveAs);
                 if($is_save){
                     $list = ExcelTool::changeExcelToListForActiveProducts($saveAs);
-                    $messages = ExcelTool::checkExcelActiveProducts1($list);
-//                    $messages = [];
+                    $messages = ExcelTool::checkExcelActiveProducts($list);
                     if(count($messages)>0){
                         unlink($saveAs);
                         $messages_render = $this->renderPartial('import-active-products', [
@@ -92,7 +91,7 @@ class DefaultController extends ActivityController
                     }else{
                         $transaction = Yii::$app->db->beginTransaction();
                         try{
-                            ExcelTool::importListlActiveProductsToDatabase($list);
+                            ExcelTool::importListActiveProductsToDatabase($list);
                             /*ActiveProducts::modifyActivePrice($list);
                             ActiveProducts::modifySalesActivePrice($list);*/
                             $transaction->commit();
@@ -192,7 +191,7 @@ class DefaultController extends ActivityController
     public function actionimportListlActiveProductsToDatabase($file_path)
     {
         $excel_data = Tools::format_excel2array($file_path);
-        $status = ExcelTool::importListlActiveProductsToDatabase($excel_data);
+        $status = ExcelTool::importListActiveProductsToDatabase($excel_data);
         if($status>0){
             Yii::$app->getSession()->setFlash('success', '保存成功');
             $this->redirect(['/activity/active-products']);

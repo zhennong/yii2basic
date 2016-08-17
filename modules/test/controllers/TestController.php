@@ -9,7 +9,9 @@
 namespace app\modules\test\controllers;
 
 use app\components\Tools;
+use app\models\Sales;
 use app\models\Supply;
+use app\modules\activity\models\ExcelTool;
 use yii\filters\VerbFilter;
 
 class TestController extends DefaultController
@@ -34,13 +36,11 @@ class TestController extends DefaultController
 
     public function actionTest2()
     {
-        $y =Supply::getSalesIdsArr();
-        Tools::_vp($y);
         return $this->render('test2');
     }
 
     public function actionTest3()
     {
-        Supply::getAllSupplyDetail();
+        ExcelTool::getAllSupplyDetail();
     }
 }

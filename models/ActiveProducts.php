@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use app\components\Tools;
+use app\modules\activity\models\ExcelTool;
 use Yii;
 
 /**
@@ -65,5 +67,16 @@ class ActiveProducts extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
             'status' => 'Status',
         ];
+    }
+
+    /**
+     * 获取活动产品id索引
+     */
+    public static function getActiveProductsIndex()
+    {
+        $active_id = ExcelTool::getActiveIdCache();
+        $x = self::find()->select(['product_id'])->where(['active_id' => $active_id])->indexBy('product_id')->all();
+        Yii::$app->cache->set('active_products_index', $x, 60);
+        return $x;
     }
 }

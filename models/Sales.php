@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use app\components\Tools;
+use app\modules\activity\models\ExcelTool;
 use Yii;
 
 /**
@@ -78,15 +80,23 @@ class Sales extends \yii\db\ActiveRecord
         return $sales_id;
     }
 
-    public static function getSalesIdFromProductIdAndMarketId1($sales_arr, $product_id, $market_id)
+    /**
+     * 获取门市信息的market product 索引
+     * @return mixed
+     */
+    public static function getAllSalesDetailFromMarketAndProduct()
     {
-        $sales_id = isset($sales_arr[$market_id][$product_id])?$sales_arr[$market_id][$product_id]:0;
-        return $sales_id;
+        $supply_detail = ExcelTool::getAllSupplyDetail();
+        foreach ($supply_detail as $k => $v){
+            $x[$v['market_id']][$v['product_id']]['sales_id'] = $v['sales_id']>0?$v['sales_id']:0;
+            $x[$v['market_id']][$v['product_id']]['price'] = $v['price']>0?$v['price']:0;
+        }
+        return $x;
     }
 
-    public static function getSalesPriceFromProductIdAndMarketId1($sales_price_arr, $product_id, $market_id)
+    public static function getSalesDetailByMarketIdAndProductId($market_id, $product_id)
     {
-        $sales_price = isset($sales_price_arr[$market_id][$product_id])?$sales_price_arr[$market_id][$product_id]:0;
-        return $sales_price;
+        $all_sales = ExcelTool::getAllSalesCache();
+        return isset($all_sales[$market_id][$product_id])?$all_sales[$market_id][$product_id]:false;
     }
 }
