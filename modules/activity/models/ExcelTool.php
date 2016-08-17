@@ -106,6 +106,7 @@ class ExcelTool
      */
     public static function getExcelActiveProducts($file_path)
     {
+        $list = [];
         $excel_data = Tools::format_excel2array($file_path);
         foreach ($excel_data as $k => $v) {
             if ($k > 1) {
@@ -114,13 +115,13 @@ class ExcelTool
         }
         foreach ($excel_body as $k => $v) {
             if ($v['A'] > 0 && $v['B'] > 0) {
-                $active_id = $v['A'];
-                $product_id = str_replace('=', '', $v['B']);
-                $active_price = $v['C'];
-                $original_price = $v['D'];
-                $market_id = $v['E'];
-                $market_active_price = $v['F'];
-                $market_original_price = $v['G'];
+                $active_id = str_replace(' ', '', $v['A']);
+                $product_id = str_replace(' ', '', str_replace('=', '', $v['B']));
+                $active_price = str_replace(' ', '', $v['C']);
+                $original_price = str_replace(' ', '', $v['D']);
+                $market_id = str_replace(' ', '', $v['E']);
+                $market_active_price = str_replace(' ', '', $v['F']);
+                $market_original_price = str_replace(' ', '', $v['G']);
                 $list[$k]['active_id'] = $active_id;
                 $list[$k]['product_id'] = $product_id;
                 $list[$k]['active_price'] = $active_price;
