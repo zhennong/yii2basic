@@ -152,52 +152,6 @@ class ExcelTool
     /**
      * 检测excel数据
      */
-    /*public static function checkExcelActiveProducts($list)
-    {
-        $product_ids = [];
-        $messages = [];
-        $active_id = Active::getLastActiveId();
-        foreach ($list as $k => $v) {
-            if (in_array($v['product_id'], $product_ids)) {
-                $messages[] = ['type' => 'danger', 'product_id' => $v['product_id'], 'msg' => '此产品重复'];
-            } else {
-                $this_product_info = Product::find()->select(['activeid', 'status', 'price'])->where(['itemid' => $v['product_id']])->one();
-                $find_active_products = ActiveProducts::find()->select(['product_id'])->where(['product_id' => $v['product_id'], 'active_id' => $active_id])->one();
-                if ($v['active_id'] != $active_id) {
-                    $messages[] = ['type' => 'danger', 'product_id' => $v['product_id'], 'msg' => '活动id不正确'];
-                } elseif (!$this_product_info) {
-                    $messages[] = ['type' => 'danger', 'product_id' => $v['product_id'], 'msg' => '没有此产品'];
-                } elseif (count($find_active_products) > 0) {
-                    $messages[] = ['type' => 'warning', 'product_id' => $v['product_id'], 'msg' => '已存在此产品'];
-                } elseif ($this_product_info['activeid'] > 0) {
-                    $messages[] = ['type' => 'danger', 'product_id' => $v['product_id'], 'msg' => '当前产品正在活动中'];
-                } elseif ($this_product_info['status'] != Product::STATUS_SHELVE) {
-                } elseif ($this_product_info['price'] == 0) {
-                    $messages[] = ['type' => 'warning', 'product_id' => $v['product_id'], 'msg' => '当前产品并未上架'];
-                } elseif ($this_product_info['price'] < $v['active_price'] || $this_product_info['price'] == $v['active_price']) {
-                    $messages[] = ['type' => 'danger', 'product_id' => $v['product_id'], 'msg' => '活动价格应该小于当前产品价格'];
-                } elseif ($this_product_info['price'] != $v['original_price']) {
-                    $messages[] = ['type' => 'warning', 'product_id' => $v['product_id'], 'msg' => '原价与当前产品价格不符'];
-                } else {
-                    if ($v['market_id'] > 0) {
-                        $sales_id = Sales::getSalesIdFromProductIdAndMarketId($v['product_id'], $v['market_id']);
-                        if (!$sales_id) {
-                            $messages[] = ['type' => 'warning', 'product_id' => $v['product_id'], 'msg' => '没有门市'];
-                        } else {
-                            $sales_price = $sales_id > 0 ? Supply::find()->select(['price'])->where(['pid' => $v['product_id'], 'fid' => $sales_id])->one()->price : 0;
-                            if ($sales_price != $v['market_original_price']) {
-                                $messages[] = ['type' => 'warning', 'product_id' => $v['product_id'], 'msg' => '门市原价不符'];
-                            } elseif ($sales_price < $v['market_active_price']) {
-                                $messages[] = ['type' => 'warning', 'product_id' => $v['product_id'], 'msg' => '门市活动底价比原底价高'];
-                            }
-                        }
-                    }
-                }
-                $product_ids[] = $v['product_id'];
-            }
-        }
-        return $messages;
-    }*/
     public static function checkExcelActiveProducts($list)
     {
         $product_ids = [];
@@ -216,7 +170,7 @@ class ExcelTool
                 } elseif (!$product_info) {
                     $messages[] = ['type' => 'danger', 'product_id' => $product_id, 'msg' => '没有此产品'];
                 } elseif (isset($active_products[$product_id])) {
-                    $messages[] = ['type' => 'warning', 'product_id' => $product_id, 'msg' => '已存在此产品'];
+//                    $messages[] = ['type' => 'warning', 'product_id' => $product_id, 'msg' => '已存在此产品'];
                 } elseif ($product_info['activeid'] > 0) {
                     $messages[] = ['type' => 'danger', 'product_id' => $product_id, 'msg' => '当前产品正在活动中'];
                 } elseif ($product_info['status'] != Product::STATUS_SHELVE) {
@@ -251,6 +205,22 @@ class ExcelTool
     }
 
     /**
+     * 获取已存在的活动产品
+     */
+    public static function getExistProductIds($list)
+    {
+        $ids = [];
+        $active_products = self::getActiveProductsCache();
+        foreach($list as $k => $v) {
+            $product_id = $v['product_id'];
+            if (isset($active_products[$product_id])){
+                $ids[] = $product_id;
+            }
+        }
+        return $ids;
+    }
+
+    /**
      * 由list插入数据到数据库
      */
     public static function importListActiveProductsToDatabase($data)
@@ -259,44 +229,47 @@ class ExcelTool
         $ActvieProducts = new ActiveProducts();
         $status = 1;
         $products = ExcelTool::getProductsCache();
+        $exist_active_product_ids = self::getExistProductIds($data);
         $transaction = Yii::$app->db->beginTransaction();
         try {
             foreach ($data as $k => $v) {
-                $active_id = $v['active_id'];
                 $product_id = $v['product_id'];
-                $active_price = $v['active_price'];
-                $original_price = $v['original_price'];
-                $market_id = $v['market_id'];
-                $market_active_price = $v['market_active_price'];
-                $market_original_price = $v['market_original_price'];
-                $sales_info = Sales::getSalesDetailByMarketIdAndProductId($market_id, $product_id);
+                if(!in_array($product_id, $exist_active_product_ids)){
+                    $active_id = $v['active_id'];
+                    $active_price = $v['active_price'];
+                    $original_price = $v['original_price'];
+                    $market_id = $v['market_id'];
+                    $market_active_price = $v['market_active_price'];
+                    $market_original_price = $v['market_original_price'];
+                    $sales_info = Sales::getSalesDetailByMarketIdAndProductId($market_id, $product_id);
 //                $sales_id = $v['sales_id'];
-                $sales_id = $sales_info['sales_id'];
-                $sales_price = isset($sales_info['price']) ? $sales_info['price'] : 0;
-                $product_info = $products[$product_id];
-                // 插入到active goods表里
-                $active_goods = clone $ActiveGoods;
-                $active_goods->actid = $active_id;
-                $active_goods->pid = $product_id;
-                $active_goods->price = $active_price;
-                $active_goods->marketprice = $market_active_price;
-                $active_goods->marketid = $market_id;
-                $active_goods->menshiid = $sales_id;
-                $active_goods->addtime = time();
-                $active_goods->save();
-                // 插入到active products表里
-                $active_products = clone $ActvieProducts;
-                $active_products->active_id = $active_id;
-                $active_products->product_id = $product_id;
-                $active_products->active_price = $active_price;
-                $active_products->original_price = $original_price;
-                $active_products->price_bak = $product_info['price'];
-                $active_products->market_id = $market_id;
-                $active_products->sales_id = $market_id > 0 ? $sales_id : 0;
-                $active_products->market_active_price = $market_active_price;
-                $active_products->market_original_price = $market_original_price;
-                $active_products->market_price_bak = $sales_price;
-                $active_products->save();
+                    $sales_id = $sales_info['sales_id'];
+                    $sales_price = isset($sales_info['price']) ? $sales_info['price'] : 0;
+                    $product_info = $products[$product_id];
+                    // 插入到active goods表里
+                    $active_goods = clone $ActiveGoods;
+                    $active_goods->actid = $active_id;
+                    $active_goods->pid = $product_id;
+                    $active_goods->price = $active_price;
+                    $active_goods->marketprice = $market_active_price;
+                    $active_goods->marketid = $market_id;
+                    $active_goods->menshiid = $sales_id;
+                    $active_goods->addtime = time();
+                    $active_goods->save();
+                    // 插入到active products表里
+                    $active_products = clone $ActvieProducts;
+                    $active_products->active_id = $active_id;
+                    $active_products->product_id = $product_id;
+                    $active_products->active_price = $active_price;
+                    $active_products->original_price = $original_price;
+                    $active_products->price_bak = $product_info['price'];
+                    $active_products->market_id = $market_id;
+                    $active_products->sales_id = $market_id > 0 ? $sales_id : 0;
+                    $active_products->market_active_price = $market_active_price;
+                    $active_products->market_original_price = $market_original_price;
+                    $active_products->market_price_bak = $sales_price;
+                    $active_products->save();
+                }
             }
             $transaction->commit();
         } catch (Exception $e) {
