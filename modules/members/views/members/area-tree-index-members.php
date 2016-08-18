@@ -13,8 +13,8 @@ use app\models\Members;
 $province_index = Area::getProvinceIdToNameIndex();
 $start_time = 1451577600;
 $areas = Area::find()->select(['areaid', 'parentid'])->asArray()->all();
-$province_arr = ['云南', '湖南', '湖北', '江西', '海南'];
-$province_new_arr = ['浙江', '安徽', '天津', '北京', '广东', '广西', '甘肃'];
+$province_arr = [];
+$province_new_arr = ['浙江', '安徽', '天津', '北京', '广东', '广西', '甘肃', '云南', '湖南', '湖北', '江西', '海南'];
 $area_tree = Tools::list2tree($areas, 'areaid', 'parentid');
 
 $z = [];
