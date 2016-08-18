@@ -18,6 +18,9 @@ $province_new_arr = ['浙江', '安徽', '天津', '北京', '广东', '广西',
 $area_tree = Tools::list2tree($areas, 'areaid', 'parentid');
 
 foreach ($province_arr as $key => $value){
+    $x = [];
+    $y = [];
+    $area_ids = [];
     foreach ($area_tree as $k => $v){
         if($v['areaid']==$province_index[$value]){
             $x[] = $v;
