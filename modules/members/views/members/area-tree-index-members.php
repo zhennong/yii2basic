@@ -38,6 +38,9 @@ foreach ($province_arr as $key => $value){
 }
 
 foreach ($province_new_arr as $key => $value){
+    $x = [];
+    $y = [];
+    $area_ids = [];
     foreach ($area_tree as $k => $v){
         if($v['areaid']==$province_index[$value]){
             $x[] = $v;
