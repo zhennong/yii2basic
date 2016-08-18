@@ -6,7 +6,6 @@
  * Time: 16:50
  */
 
-use Yii;
 use app\components\Tools;
 use app\models\Area;
 use app\models\Members;
