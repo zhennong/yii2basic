@@ -90,6 +90,14 @@ class MembersController extends DefaultController
     }
 
     /**
+     * 按照注册地区树查询客户
+     */
+    public function actionAreaTreeIndexMembers()
+    {
+        return $this->render('area-tree-index-members');
+    }
+
+    /**
      * Displays a single Members model.
      * @param string $id
      * @return mixed

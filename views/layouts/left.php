@@ -116,6 +116,10 @@
                                         'label'=>'去年818购买过的客户',
                                         'url'=> Yii::$app->urlManager->createUrl('members/members/member-has-buy-last818'),
                                     ],
+                                    [
+                                        'label'=>'按照注册地区树查询客户',
+                                        'url'=> Yii::$app->urlManager->createUrl('members/members/area-tree-index-members'),
+                                    ],
                                 ],
                             ],
                         ],
