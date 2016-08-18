@@ -36,7 +36,7 @@ $trades = Trades::find()->select(['buyer'])->where(['and', ['>', 'addtime', $sta
 foreach ($trades as $k => $v){
     $trade_members[] = $v['buyer'];
 }
-$members = Members::find()->select(['mobile'])->where(['and',['in','regareaid',$area_ids], 'LENGTH(mobile)'=>11, ['>','regtime',$start_time], ['not in', 'username', $trade_members]])->groupBy('mobile')->asArray()->all();
+$members = Members::find()->select(['mobile'])->where(['and',['in','regareaid',$area_ids], 'LENGTH(mobile)=11', ['>','regtime',$start_time], ['not in', 'username', $trade_members]])->groupBy('mobile')->asArray()->all();
 
 /*$z = [];
 foreach ($province_arr as $key => $value){
