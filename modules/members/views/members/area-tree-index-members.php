@@ -17,10 +17,9 @@ $province_arr = ['云南', '湖南', '湖北', '江西', '海南'];
 $province_new_arr = ['浙江', '安徽', '天津', '北京', '广东', '广西', '甘肃'];
 $area_tree = Tools::list2tree($areas, 'areaid', 'parentid');
 
+$z = [];
 foreach ($province_arr as $key => $value){
     $x = [];
-    $y = [];
-    $area_ids = [];
     foreach ($area_tree as $k => $v){
         if($v['areaid']==$province_index[$value]){
             $x[] = $v;
@@ -39,8 +38,6 @@ foreach ($province_arr as $key => $value){
 
 foreach ($province_new_arr as $key => $value){
     $x = [];
-    $y = [];
-    $area_ids = [];
     foreach ($area_tree as $k => $v){
         if($v['areaid']==$province_index[$value]){
             $x[] = $v;
