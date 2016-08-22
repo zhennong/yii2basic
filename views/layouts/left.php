@@ -145,6 +145,27 @@
                             ],
                         ],
                     ],
+                    [
+                        'label' => '代理商管理',
+                        'icon' => 'fa fa-share',
+                        'url' => '#',
+                        'items'=>[
+                            [
+                                'label' => '招商部会员列表',
+                                'url' => Yii::$app->urlManager->createUrl('agents/agent-members/members'),
+                            ],
+                            [
+                                'label' => '交易分类',
+                                'url' => '#',
+                                'items'=>[
+                                    [
+                                        'label'=>'有交易客户',
+                                        'url'=> Yii::$app->urlManager->createUrl('members/members/big-members'),
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
                 ],
             ]
         ) ?>

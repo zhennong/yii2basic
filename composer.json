@@ -40,7 +40,8 @@
         "schmunk42/yii2-giiant": "@stable",
         "trntv/probe": "*",
         "warrence/yii2-kartikgii": "dev-master",
-        "trntv/yii2-file-kit": "^1.1"
+        "trntv/yii2-file-kit": "^1.1",
+        "xj/yii2-lazyload-widget": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

@@ -116,6 +116,10 @@ $config = [
         'trades' => [
             'class' => 'app\modules\trades\Module',
         ],
+        // 代理商
+        'agents' => [
+            'class' => 'app\modules\agents\Module',
+        ],
     ],
     'params' => $params,
 ];
