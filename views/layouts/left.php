@@ -136,16 +136,6 @@
                             'label' => '交易列表',
                             'url' => ['/trades/trades'],
                         ],
-                        [
-                            'label' => '交易分类',
-                            'url' => '#',
-                            'items' => [
-                                [
-                                    'label' => '有交易客户',
-                                    'url' => ['/members/members/big-members'],
-                                ],
-                            ],
-                        ],
                     ],
                 ],
                 [
@@ -154,18 +144,12 @@
                     'url' => '#',
                     'items' => [
                         [
-                            'label' => '招商部会员列表',
+                            'label' => '招商部管理员列表',
                             'url' => ['/agents/agent-members/members'],
                         ],
                         [
-                            'label' => '交易分类',
-                            'url' => '#',
-                            'items' => [
-                                [
-                                    'label' => '有交易客户',
-                                    'url' => ['/members/members/big-members'],
-                                ],
-                            ],
+                            'label' => '招商部管理员地区划分',
+                            'url' => ['/agents/area-manage-assign'],
                         ],
                     ],
                 ],
