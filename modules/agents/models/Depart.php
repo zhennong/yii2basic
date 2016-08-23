@@ -9,7 +9,12 @@
 namespace app\modules\agents\models;
 
 
+use app\models\Members;
+
 class Depart extends \app\models\Depart
 {
-
+    public function getMember()
+    {
+        return $this->hasOne(Members::className(), ['username'=>'username']);
+    }
 }

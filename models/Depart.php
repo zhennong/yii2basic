@@ -25,6 +25,7 @@ class Depart extends \yii\db\ActiveRecord
     const ADMINISTRATOR = 4; //管理员
     const FINANCE_DEPRATMENT = 5; //财务部
     const FREIGHT_DEPRATMENT = 6; //货运部
+    const INVESTMENT = 7; // 招商部
 
     public static function getDepartment()
     {
@@ -36,9 +37,10 @@ class Depart extends \yii\db\ActiveRecord
             self::ADMINISTRATOR => '管理员',
             self::FINANCE_DEPRATMENT => '财务部',
             self::FREIGHT_DEPRATMENT => '货运部',
+            self::INVESTMENT => '招商部',
         ];
     }
-    
+
     public static function tableName()
     {
         return '{{%depart}}';
