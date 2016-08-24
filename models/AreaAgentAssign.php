@@ -7,8 +7,7 @@ use Yii;
 /**
  * This is the model class for table "{{%area_agent_assign}}".
  *
- * @property string $id
- * @property integer $manage_id
+ * @property integer $manager_id
  * @property integer $area_id
  * @property integer $fasten
  */
@@ -38,8 +37,8 @@ class AreaAgentAssign extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['manage_id', 'area_id'], 'required'],
-            [['manage_id', 'area_id', 'fasten'], 'integer'],
+            [['manager_id', 'area_id'], 'required'],
+            [['manager_id', 'area_id', 'fasten'], 'integer'],
             [['area_id'], 'unique'],
         ];
     }
@@ -51,7 +50,7 @@ class AreaAgentAssign extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'manage_id' => '后台管理员userid',
+            'manager_id' => '后台管理员userid',
             'area_id' => '地区id',
             'fasten' => '是否固定',
         ];

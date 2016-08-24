@@ -2,13 +2,18 @@
 
 namespace app\modules\agents\controllers;
 
+use app\components\Tools;
 use app\models\Area;
 use app\models\AreaAgentAssign;
+use app\modules\agents\models\Depart;
 use Yii;
 use app\modules\agents\models\AreaManageAssign;
 use app\modules\agents\models\AreaManageAssignSearch;
+use yii\db\Exception;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii2mod\alert\Alert;
 
 /**
  * AreaManageAssignController implements the CRUD actions for AreaManageAssign model.
@@ -50,14 +55,34 @@ class AreaManageAssignController extends DefaultController
      */
     public function actionAssign()
     {
-        $stable_areas = AreaAgentAssign::find()->where()->asArray()->all();
-        $stable_area_arr = [];
-        $index_areas = Area::find()->where()->asArray()->all();
+        $model = new AreaManageAssign();
+        $managers = Depart::getInvestmentManagers();
+        $managers_arr = ArrayHelper::map($managers, 'userid', 'username');
+        $stable_areas = $model::find()->select(['area_id'])->where(['fasten'=>$model::FASTEN_STABLE])->asArray()->all();
+        $stable_area_arr = ArrayHelper::map($stable_areas, 'area_id', 'area_id');
+        $index_areas = Area::find()->select(['areaid', 'areaname', 'parentid'])->where(['not in', 'areaid', $stable_area_arr])->asArray()->all();
+        $transaction = Yii::$app->db->beginTransaction();
+        try{
+            $model::deleteAll(['fasten'=>$model::FASTEN_DEFAULT]);
+            $data = [];
+            foreach ($index_areas as $k => $v){
+                $manager_id = array_rand($managers_arr, 1);
+                $data[] = [$v['areaid'], $manager_id, $model::FASTEN_DEFAULT];
+            }
+            Yii::$app->db->createCommand()->batchInsert($model::tableName(), ['area_id', 'manager_id', 'fasten'], $data)->execute();
+            $transaction->commit();
+            $status = 1;
+        }catch (Exception $e){
+            $transaction->rollBack();
+            $status = 0;
+        }
+        Yii::$app->session->setFlash('success', '分配成功');
+        return $this->redirect(['/agents/area-manage-assign']);
     }
 
     /**
      * Displays a single AreaManageAssign model.
-     * @param string $id
+     * @param integer $id
      * @return mixed
      */
     public function actionView($id)
@@ -77,7 +102,7 @@ class AreaManageAssignController extends DefaultController
         $model = new AreaManageAssign();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->area_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -88,7 +113,7 @@ class AreaManageAssignController extends DefaultController
     /**
      * Updates an existing AreaManageAssign model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id
+     * @param integer $id
      * @return mixed
      */
     public function actionUpdate($id)
@@ -96,7 +121,7 @@ class AreaManageAssignController extends DefaultController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->area_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -107,7 +132,7 @@ class AreaManageAssignController extends DefaultController
     /**
      * Deletes an existing AreaManageAssign model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
+     * @param integer $id
      * @return mixed
      */
     public function actionDelete($id)
@@ -120,7 +145,7 @@ class AreaManageAssignController extends DefaultController
     /**
      * Finds the AreaManageAssign model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
+     * @param integer $id
      * @return AreaManageAssign the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */

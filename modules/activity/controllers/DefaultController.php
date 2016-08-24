@@ -8,6 +8,7 @@ use app\modules\activity\models\ExcelTool;
 use Yii;
 use app\modules\activity\models\ActiveProducts;
 use app\modules\activity\models\ExcelUploadForm;
+use yii\db\Exception;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 

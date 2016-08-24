@@ -17,6 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
+    <?=\yii2mod\alert\Alert::widget() ?>
+
     <p>
         <?//= Html::a('Create Area Manage Assign', ['create'], ['class' => 'btn btn-success']) ?>
         <?= Html::a('随机分配地区', ['assign'], ['class' => 'btn btn-danger']) ?>
@@ -27,10 +29,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'manage_id',
             'area_id',
-            'areaname',
+            'area_name',
+            'manager_id',
             [
                 'class'=>EnumColumn::className(),
                 'attribute'=>'fasten',

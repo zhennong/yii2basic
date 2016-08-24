@@ -23,7 +23,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($manages as $k => $v): ?>
+                <?php foreach ($managers as $k => $v): ?>
                     <tr>
                         <td><?=$v['userid'] ?></td>
                         <td><?=$v['username'] ?></td>

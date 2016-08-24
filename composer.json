@@ -41,7 +41,8 @@
         "trntv/probe": "*",
         "warrence/yii2-kartikgii": "dev-master",
         "trntv/yii2-file-kit": "^1.1",
-        "xj/yii2-lazyload-widget": "*"
+        "xj/yii2-lazyload-widget": "*",
+        "yii2mod/yii2-sweet-alert": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

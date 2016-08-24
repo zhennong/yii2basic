@@ -17,4 +17,14 @@ class Depart extends \app\models\Depart
     {
         return $this->hasOne(Members::className(), ['username'=>'username']);
     }
+
+    public static function getInvestmentManagers()
+    {
+        $managers = Depart::find()->joinWith('member')->select([
+            Depart::tableName().".username",
+            'userid',
+            'truename',
+        ])->where(['bumen' => Depart::INVESTMENT])->asArray()->all();
+        return $managers;
+    }
 }

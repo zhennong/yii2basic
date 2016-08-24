@@ -15,13 +15,9 @@ class AgentMembersController   extends DefaultController
 {
     public function actionMembers()
     {
-        $manages = Depart::find()->joinWith('member')->select([
-            Depart::tableName().".username",
-            'userid',
-            'truename',
-        ])->where(['bumen' => Depart::INVESTMENT])->asArray()->all();
+        $managers = Depart::getInvestmentManagers();
         return $this->render('members', [
-            'manages'=>$manages,
+            'managers'=>$managers,
         ]);
     }
 }

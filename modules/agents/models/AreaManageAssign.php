@@ -14,6 +14,8 @@ use app\models\AreaAgentAssign;
 
 class AreaManageAssign extends AreaAgentAssign
 {
+    public $area_name;
+    
     public function getArea()
     {
         return $this->hasOne(Area::className(), ['areaid'=>'area_id']);

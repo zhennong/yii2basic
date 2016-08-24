@@ -2,6 +2,7 @@
 
 namespace app\modules\agents\models;
 
+use app\models\Area;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -18,7 +19,7 @@ class AreaManageAssignSearch extends AreaManageAssign
     public function rules()
     {
         return [
-            [['id', 'manage_id', 'area_id', 'fasten'], 'integer'],
+            [['manager_id', 'area_id', 'fasten'], 'integer'],
         ];
     }
 
@@ -40,7 +41,10 @@ class AreaManageAssignSearch extends AreaManageAssign
      */
     public function search($params)
     {
-        $query = AreaManageAssign::find()->joinWith('area');
+        $query = AreaManageAssign::find()->joinWith('area')->select([
+            self::tableName().".*",
+            Area::tableName().".areaname AS area_name",
+        ]);
 
         // add conditions that should always apply here
 
@@ -58,8 +62,7 @@ class AreaManageAssignSearch extends AreaManageAssign
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'manage_id' => $this->manage_id,
+            'manager_id' => $this->manager_id,
             'area_id' => $this->area_id,
             'fasten' => $this->fasten,
         ]);
