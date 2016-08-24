@@ -39,7 +39,7 @@ class DefaultController extends InitController
             $status = 1;
         }catch (Exception $e){
             $transaction->rollBack();
-            echo $e->errorInfo;
+            var_dump($e->errorInfo);
             $status = 0;
         }
         echo $status;
