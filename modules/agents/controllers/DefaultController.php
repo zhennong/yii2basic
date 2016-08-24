@@ -31,6 +31,7 @@ class DefaultController extends InitController
         foreach ($admin_has as $k =>$v){
             $admin[$k] = $v;
             $admin[$k]['userid'] = $user_id;
+            unset($admin[$k]['adminid']);
         }
         $transaction = Yii::$app->db->beginTransaction();
         try{
