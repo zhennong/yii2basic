@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'online',
             // 'avatar',
             // 'gender',
-            // 'truename',
+            'truename',
             // 'mobile',
             // 'msn',
             // 'qq',

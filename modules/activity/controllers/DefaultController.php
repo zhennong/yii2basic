@@ -65,8 +65,8 @@ class DefaultController extends ActivityController
                         $transaction = Yii::$app->db->beginTransaction();
                         try{
                             ExcelTool::importListActiveProductsToDatabase($list);
-                            ActiveProducts::modifyActivePrice($list);
-                            ActiveProducts::modifySalesActivePrice($list);
+                            /*ActiveProducts::modifyActivePrice($list);
+                            ActiveProducts::modifySalesActivePrice($list);*/
                             $transaction->commit();
                             $status = 1;
                         }catch (Exception $e){

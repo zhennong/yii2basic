@@ -144,10 +144,6 @@
                     'url' => '#',
                     'items' => [
                         [
-                            'label' => '招商部管理员列表',
-                            'url' => ['/agents/agent-members/members'],
-                        ],
-                        [
                             'label' => '招商部管理员地区划分',
                             'url' => ['/agents/area-manage-assign'],
                         ],
