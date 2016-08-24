@@ -60,7 +60,8 @@ class AreaManageAssignController extends DefaultController
         $managers_arr = ArrayHelper::map($managers, 'userid', 'username');
         $stable_areas = $model::find()->select(['area_id'])->where(['fasten'=>$model::FASTEN_STABLE])->asArray()->all();
         $stable_area_arr = ArrayHelper::map($stable_areas, 'area_id', 'area_id');
-        $index_areas = Area::find()->select(['areaid', 'areaname', 'parentid'])->where(['not in', 'areaid', $stable_area_arr])->asArray()->all();
+        $index_areas = Area::find()->select(['areaid', 'areaname', 'parentid', 'child'])->where(['and', ['not in', 'areaid', $stable_area_arr], ['child'=>Area::NO_CHILD]])->asArray()->all();
+        Tools::_vp($index_areas,0,2);
         $transaction = Yii::$app->db->beginTransaction();
         try{
             $model::deleteAll(['fasten'=>$model::FASTEN_DEFAULT]);

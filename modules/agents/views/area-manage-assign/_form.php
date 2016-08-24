@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\widgets\Select2;
+use app\modules\agents\models\AreaManageAssign;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\agents\models\AreaManageAssign */
@@ -12,11 +14,13 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'manager_id')->textInput() ?>
+    <?= $form->field($model, 'area_id')->widget(Select2::className(), [
+        'data'=>AreaManageAssign::getAreaIdToName(),
+    ]) ?>
 
-    <?= $form->field($model, 'area_id')->textInput() ?>
+    <?= $form->field($model, 'manager_id')->dropDownList(AreaManageAssign::getManagerIdToName()) ?>
 
-    <?= $form->field($model, 'fasten')->textInput() ?>
+    <?= $form->field($model, 'fasten')->dropDownList(AreaManageAssign::getFasten()) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

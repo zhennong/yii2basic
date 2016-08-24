@@ -27,11 +27,29 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+//            ['class' => 'yii\grid\SerialColumn'],
 
             'area_id',
             'area_name',
-            'manager_id',
+            [
+                'class'=>EnumColumn::className(),
+                'attribute'=>'manager_id',
+                'enum'=>AreaManageAssign::getManagerIds(),
+                'filter'=>AreaManageAssign::getManagerIds(),
+            ],
+            [
+                'class'=>EnumColumn::className(),
+                'attribute'=>'manager',
+                'enum'=>AreaManageAssign::getManagers(),
+                'filter'=>AreaManageAssign::getManagers(),
+            ],
+            [
+                'class'=>EnumColumn::className(),
+                'attribute'=>'manager_name',
+                'enum'=>AreaManageAssign::getManagerNames(),
+                'filter'=>AreaManageAssign::getManagerNames(),
+            ],
+
             [
                 'class'=>EnumColumn::className(),
                 'attribute'=>'fasten',

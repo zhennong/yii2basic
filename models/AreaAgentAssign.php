@@ -2,7 +2,9 @@
 
 namespace app\models;
 
+use app\modules\agents\models\Depart;
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%area_agent_assign}}".
@@ -23,9 +25,52 @@ class AreaAgentAssign extends \yii\db\ActiveRecord
             self::FASTEN_STABLE=>'固定',
         ];
     }
-    /**
-     * @inheritdoc
-     */
+
+    public static function getManagers()
+    {
+        $managers = Depart::getInvestmentManagers();
+        $x = [];
+        foreach($managers as $k => $v){
+            $x[$v['username']] = $v['username'];
+        }
+        return $x;
+    }
+
+    public static function getManagerNames()
+    {
+        $managers = Depart::getInvestmentManagers();
+        $x = [];
+        foreach($managers as $k => $v){
+            $x[$v['truename']] = $v['truename'];
+        }
+        return $x;
+    }
+
+    public static function getManagerIds()
+    {
+        $managers = Depart::getInvestmentManagers();
+        $x = [];
+        foreach($managers as $k => $v){
+            $x[$v['userid']] = $v['userid'];
+        }
+        return $x;
+    }
+
+    public static function getManagerIdToName()
+    {
+        $managers = Depart::getInvestmentManagers();
+        $x = [];
+        foreach($managers as $k => $v){
+            $x[$v['userid']] = $v['userid']."|".$v['username']."|".$v['truename'];
+        }
+        return $x;
+    }
+
+    public static function getAreaIdToName()
+    {
+        return ArrayHelper::map(Area::find()->select(['areaid', 'areaname'])->where(['child'=>Area::NO_CHILD])->asArray()->all(), 'areaid', 'areaname');
+    }
+
     public static function tableName()
     {
         return '{{%area_agent_assign}}';
@@ -49,9 +94,8 @@ class AreaAgentAssign extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'manager_id' => '后台管理员userid',
             'area_id' => '地区id',
+            'manager_id' => '后台管理员userid',
             'fasten' => '是否固定',
         ];
     }

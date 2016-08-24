@@ -18,9 +18,17 @@ use yii\helpers\ArrayHelper;
  */
 class Area extends \yii\db\ActiveRecord
 {
-    /**
-     * @inheritdoc
-     */
+    const NO_CHILD = 0;
+    const HAS_CHILD = 1;
+
+    public static function getHasChild()
+    {
+        return [
+            self::NO_CHILD => '没有子地区',
+            self::HAS_CHILD => '有子地区',
+        ];
+    }
+    
     public static function tableName()
     {
         return '{{%area}}';
