@@ -24,6 +24,8 @@ class ExcelTool
      */
     public static function getActiveIdCache()
     {
+        Yii::$app->cache->flush(); //清楚缓存
+
         $x = Yii::$app->cache->get('active_id');
         if ($x){
 //            Tools::_vp('get active_id',0,3);
@@ -159,7 +161,9 @@ class ExcelTool
         $messages = [];
         $products = self::getProductsCache();
         $active_id = self::getActiveIdCache();
+        Yii::$app->cache->flush();
         $active_products = self::getActiveProductsCache();
+
         foreach($list as $k => $v){
             $product_id = $v['product_id'];
             if (in_array($product_id, $product_ids)) {
@@ -174,15 +178,20 @@ class ExcelTool
 //                    $messages[] = ['type' => 'warning', 'product_id' => $product_id, 'msg' => '已存在此产品'];
                 } elseif ($product_info['activeid'] > 0) {
                     $messages[] = ['type' => 'danger', 'product_id' => $product_id, 'msg' => '当前产品正在活动中'];
-                } elseif ($product_info['status'] != Product::STATUS_SHELVE) {
-                    $messages[] = ['type' => 'danger', 'product_id' => $product_id, 'msg' => '当前产品未上架'];
-                } elseif ($product_info['price'] == 0) {
+                }
+//                elseif ($product_info['status'] != Product::STATUS_SHELVE) {
+//                    $messages[] = ['type' => 'danger', 'product_id' => $product_id, 'msg' => '当前产品未上架'];
+//                }
+                elseif ($product_info['price'] == 0) {
                     $messages[] = ['type' => 'warning', 'product_id' => $product_id, 'msg' => '当前产品并未上架'];
-                } elseif ($product_info['price'] < $v['active_price'] || $product_info['price'] == $v['active_price']) {
-                    $messages[] = ['type' => 'danger', 'product_id' => $product_id, 'msg' => '活动价格应该小于当前产品价格'];
-                } elseif ($product_info['price'] != $v['original_price']) {
-                    $messages[] = ['type' => 'warning', 'product_id' => $product_id, 'msg' => '原价与当前产品价格不符'];
-                } else {
+                }
+//                elseif ($product_info['price'] < $v['active_price'] || $product_info['price'] == $v['active_price']) {
+//                    $messages[] = ['type' => 'danger', 'product_id' => $product_id, 'msg' => '活动价格应该小于当前产品价格'];
+//                }
+//                elseif ($product_info['price'] != $v['original_price']) {
+//                    $messages[] = ['type' => 'warning', 'product_id' => $product_id, 'msg' => '原价与当前产品价格不符'];
+//                }
+                else {
                     if ($v['market_id'] > 0) {
                         $market = $v['market_id'];
                         $sales_info = Sales::getSalesDetailByMarketIdAndProductId($market, $product_id);
@@ -190,15 +199,19 @@ class ExcelTool
                         $sales_price = isset($sales_info)?$sales_info['price']:false;
                         if (!$sales_id) {
                             $messages[] = ['type' => 'warning', 'product_id' => $product_id, 'msg' => '没有门市'];
-                        } else {
-                            if ($sales_price != $v['market_original_price']) {
-                                $messages[] = ['type' => 'warning', 'product_id' => $product_id, 'msg' => '门市原价不符'];
-                            } elseif ($sales_price < $v['market_active_price']) {
-                                $messages[] = ['type' => 'warning', 'product_id' => $product_id, 'msg' => '门市活动底价比原底价高'];
-                            }
                         }
+//                        else {
+//                            if ($sales_price != $v['market_original_price']) {
+//                                var_dump($sales_price ."<-->".$v['market_original_price']);
+//                                $messages[] = ['type' => 'warning', 'product_id' => $product_id, 'msg' => '门市原价不符'];
+//                            }
+//                            elseif ($sales_price < $v['market_active_price']) {
+//                                $messages[] = ['type' => 'warning', 'product_id' => $product_id, 'msg' => '门市活动底价比原底价高'];
+//                            }
+//                        }
                     }
                 }
+
                 $product_ids[] = $product_id;
             }
         }
@@ -233,6 +246,7 @@ class ExcelTool
         $exist_active_product_ids = self::getExistProductIds($data);
         $transaction = Yii::$app->db->beginTransaction();
         try {
+
             foreach ($data as $k => $v) {
                 $product_id = $v['product_id'];
                 if(!in_array($product_id, $exist_active_product_ids)){
@@ -272,6 +286,7 @@ class ExcelTool
                     $active_products->save();
                 }
             }
+
             $transaction->commit();
         } catch (Exception $e) {
             $transaction->rollBack();
